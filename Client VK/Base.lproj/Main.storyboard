@@ -296,10 +296,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostCell" id="XVj-Zu-xyL" customClass="NewsTableViewCell" customModule="Client_VK" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="640"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="638.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XVj-Zu-xyL" id="jBl-55-x9v">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="640"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="638.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rX0-F7-1Tr" customClass="AvatarsView" customModule="Client_VK" customModuleProvider="target">
@@ -330,14 +330,25 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jNc-v9-BhL">
+                                            <rect key="frame" x="3" y="70" width="408" height="100"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="100" id="i2r-xY-t1G"/>
+                                            </constraints>
+                                            <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                            <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yEw-l7-P7d">
-                                            <rect key="frame" x="3" y="182" width="408" height="408"/>
+                                            <rect key="frame" x="3" y="180.5" width="408" height="408"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="yEw-l7-P7d" secondAttribute="height" multiplier="1:1" id="xx0-hp-gaG"/>
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eyx-9M-9Bd">
-                                            <rect key="frame" x="0.0" y="600" width="414" height="30"/>
+                                            <rect key="frame" x="0.0" y="598.5" width="414" height="30"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apT-PN-RvZ" customClass="LikeControl" customModule="Client_VK" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="5" width="40" height="20"/>
@@ -412,13 +423,22 @@
                                         <constraint firstItem="qc3-0F-rf6" firstAttribute="top" secondItem="rX0-F7-1Tr" secondAttribute="bottom" constant="10" id="RzG-ga-QwR"/>
                                         <constraint firstItem="Eyx-9M-9Bd" firstAttribute="top" secondItem="yEw-l7-P7d" secondAttribute="bottom" constant="10" id="WPs-7N-jep"/>
                                         <constraint firstItem="qc3-0F-rf6" firstAttribute="leading" secondItem="jBl-55-x9v" secondAttribute="leading" constant="3" id="aaZ-bY-eNT"/>
+                                        <constraint firstItem="jNc-v9-BhL" firstAttribute="leading" secondItem="jBl-55-x9v" secondAttribute="leading" constant="3" id="dnb-yO-0JB"/>
+                                        <constraint firstAttribute="trailing" secondItem="jNc-v9-BhL" secondAttribute="trailing" constant="3" id="hMc-ak-qsk"/>
                                         <constraint firstAttribute="trailing" secondItem="8L2-SS-8kd" secondAttribute="trailing" constant="20" id="i7M-nU-OVi"/>
+                                        <constraint firstItem="jNc-v9-BhL" firstAttribute="top" secondItem="rX0-F7-1Tr" secondAttribute="bottom" constant="10" id="ifc-6E-5ZX"/>
                                         <constraint firstItem="pJW-zE-FIW" firstAttribute="centerY" secondItem="rX0-F7-1Tr" secondAttribute="centerY" id="mGB-5U-rLD"/>
                                         <constraint firstAttribute="bottom" secondItem="Eyx-9M-9Bd" secondAttribute="bottom" constant="10" id="o8D-uP-unS"/>
                                         <constraint firstAttribute="trailing" secondItem="pJW-zE-FIW" secondAttribute="trailing" constant="20" id="qgK-l9-FZ6"/>
                                         <constraint firstAttribute="trailing" secondItem="Eyx-9M-9Bd" secondAttribute="trailing" id="qjw-Hu-7pT"/>
+                                        <constraint firstItem="yEw-l7-P7d" firstAttribute="top" secondItem="jNc-v9-BhL" secondAttribute="bottom" constant="10" id="sa5-Xm-Un5"/>
                                         <constraint firstAttribute="trailing" secondItem="qc3-0F-rf6" secondAttribute="trailing" constant="3" id="xaE-2D-1Ta"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="qc3-0F-rf6"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarUserNews" destination="rX0-F7-1Tr" id="s2y-la-2fM"/>
@@ -426,10 +446,11 @@
                                     <outlet property="imgNews" destination="yEw-l7-P7d" id="OsE-ad-xKH"/>
                                     <outlet property="nameUserNews" destination="pJW-zE-FIW" id="QL3-nM-rcr"/>
                                     <outlet property="textNews" destination="qc3-0F-rf6" id="YBr-0o-BtK"/>
+                                    <outlet property="textNewsPost" destination="jNc-v9-BhL" id="JKI-uI-53B"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PhotoCell" id="NFR-ri-MDy" customClass="NewsTableViewCell" customModule="Client_VK" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="668" width="414" height="538.5"/>
+                                <rect key="frame" x="0.0" y="666.5" width="414" height="538.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NFR-ri-MDy" id="3jQ-9Q-amy">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="538.5"/>
