@@ -216,11 +216,11 @@
 			isa = PBXGroup;
 			children = (
 				D9FB6E13246D781700F16C31 /* FriendsTableViewCell.swift */,
-				D978C01E24D7F469004D1075 /* UIImageView (load URL).swift */,
 				D98FD8E6246DCF3E0080057D /* PhotosFriendCollectionViewCell.swift */,
 				D98FD8EA246DD4270080057D /* GroupTableViewCell.swift */,
 				D98FD8EE246E81A10080057D /* NewGroupTableViewCell.swift */,
 				D97587F4247C535800782638 /* NewsTableViewCell.swift */,
+				D978C01E24D7F469004D1075 /* UIImageView (load URL).swift */,
 				D935F77B24768C8B00A9AF87 /* LikeControl.swift */,
 				D9F871DE2477D331000E8684 /* AvatarsView.swift */,
 				D941A5762481180500092CC0 /* LoadingAnimationView.swift */,
