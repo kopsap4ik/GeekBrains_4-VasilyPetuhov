@@ -1,0 +1,43 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Kingfisher",
+        "repositoryURL": "https://github.com/onevcat/Kingfisher",
+        "state": {
+          "branch": null,
+          "revision": "1339ebea9498ef6c3fc75cc195d7163d7c7167f9",
+          "version": "5.14.1"
+        }
+      },
+      {
+        "package": "Realm",
+        "repositoryURL": "https://github.com/realm/realm-cocoa",
+        "state": {
+          "branch": null,
+          "revision": "99c7d89791dfe8730c145461d59969eb4c56c557",
+          "version": "5.3.5"
+        }
+      },
+      {
+        "package": "RealmCore",
+        "repositoryURL": "https://github.com/realm/realm-core",
+        "state": {
+          "branch": null,
+          "revision": "b7c49bb107cfc933016792e78fc5daa2aca71a14",
+          "version": "6.0.19"
+        }
+      },
+      {
+        "package": "SwiftKeychainWrapper",
+        "repositoryURL": "https://github.com/ralcr/SwiftKeychainWrapper",
+        "state": {
+          "branch": "develop",
+          "revision": "c746065ce51300883497de28b6ff278f6cc40b52",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
