@@ -322,21 +322,13 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qc3-0F-rf6">
-                                            <rect key="frame" x="3" y="70" width="408" height="102"/>
-                                            <string key="text">Is education residence conveying so so. Suppose shyness say ten behaved morning had. Any unsatiable assistance compliment occasional too reasonably advantages. Unpleasing has ask acceptance partiality alteration understood two. Worth no tiled my at house added. Married he hearing am it totally removal. Remove but suffer wanted his lively length. Moonlight two applauded conveying end direction old principle but. Are expenses distance weddings perceive strongly who age domestic. 
-</string>
-                                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jNc-v9-BhL">
-                                            <rect key="frame" x="3" y="70" width="408" height="100"/>
+                                            <rect key="frame" x="3" y="70" width="408" height="100.5"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="100" id="i2r-xY-t1G"/>
+                                                <constraint firstAttribute="height" priority="900" constant="100" id="i2r-xY-t1G"/>
                                             </constraints>
-                                            <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                             <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -418,11 +410,8 @@
                                         <constraint firstItem="8L2-SS-8kd" firstAttribute="bottom" secondItem="rX0-F7-1Tr" secondAttribute="bottom" constant="3" id="K8I-8o-39A"/>
                                         <constraint firstItem="Eyx-9M-9Bd" firstAttribute="leading" secondItem="jBl-55-x9v" secondAttribute="leading" id="L8L-cJ-azU"/>
                                         <constraint firstAttribute="trailing" secondItem="yEw-l7-P7d" secondAttribute="trailing" constant="3" id="Meo-yU-sUK"/>
-                                        <constraint firstItem="yEw-l7-P7d" firstAttribute="top" secondItem="qc3-0F-rf6" secondAttribute="bottom" constant="10" id="ODI-TI-Yg2"/>
                                         <constraint firstItem="pJW-zE-FIW" firstAttribute="leading" secondItem="rX0-F7-1Tr" secondAttribute="trailing" constant="20" id="OVF-tK-wz9"/>
-                                        <constraint firstItem="qc3-0F-rf6" firstAttribute="top" secondItem="rX0-F7-1Tr" secondAttribute="bottom" constant="10" id="RzG-ga-QwR"/>
                                         <constraint firstItem="Eyx-9M-9Bd" firstAttribute="top" secondItem="yEw-l7-P7d" secondAttribute="bottom" constant="10" id="WPs-7N-jep"/>
-                                        <constraint firstItem="qc3-0F-rf6" firstAttribute="leading" secondItem="jBl-55-x9v" secondAttribute="leading" constant="3" id="aaZ-bY-eNT"/>
                                         <constraint firstItem="jNc-v9-BhL" firstAttribute="leading" secondItem="jBl-55-x9v" secondAttribute="leading" constant="3" id="dnb-yO-0JB"/>
                                         <constraint firstAttribute="trailing" secondItem="jNc-v9-BhL" secondAttribute="trailing" constant="3" id="hMc-ak-qsk"/>
                                         <constraint firstAttribute="trailing" secondItem="8L2-SS-8kd" secondAttribute="trailing" constant="20" id="i7M-nU-OVi"/>
@@ -432,20 +421,13 @@
                                         <constraint firstAttribute="trailing" secondItem="pJW-zE-FIW" secondAttribute="trailing" constant="20" id="qgK-l9-FZ6"/>
                                         <constraint firstAttribute="trailing" secondItem="Eyx-9M-9Bd" secondAttribute="trailing" id="qjw-Hu-7pT"/>
                                         <constraint firstItem="yEw-l7-P7d" firstAttribute="top" secondItem="jNc-v9-BhL" secondAttribute="bottom" constant="10" id="sa5-Xm-Un5"/>
-                                        <constraint firstAttribute="trailing" secondItem="qc3-0F-rf6" secondAttribute="trailing" constant="3" id="xaE-2D-1Ta"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="subviews">
-                                            <exclude reference="qc3-0F-rf6"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarUserNews" destination="rX0-F7-1Tr" id="s2y-la-2fM"/>
                                     <outlet property="dateNews" destination="8L2-SS-8kd" id="on0-sr-ev5"/>
                                     <outlet property="imgNews" destination="yEw-l7-P7d" id="OsE-ad-xKH"/>
                                     <outlet property="nameUserNews" destination="pJW-zE-FIW" id="QL3-nM-rcr"/>
-                                    <outlet property="textNews" destination="qc3-0F-rf6" id="YBr-0o-BtK"/>
                                     <outlet property="textNewsPost" destination="jNc-v9-BhL" id="JKI-uI-53B"/>
                                 </connections>
                             </tableViewCell>

@@ -13,7 +13,7 @@ struct PostNews {
     var avatar: UIImage?
     var date: String
     var textNews: String
-    var textImage: UIImage?
+    var imageNews: UIImage?
 }
 
 struct PhotoNews {
@@ -21,5 +21,5 @@ struct PhotoNews {
     var avatar: UIImage?
     var date: String
     //var textNews: String
-    var textImage: UIImage?
+    var imageNews: UIImage?
 }
