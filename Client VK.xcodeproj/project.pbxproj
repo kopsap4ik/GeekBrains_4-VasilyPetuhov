@@ -207,8 +207,8 @@
 				D978C02024D8059F004D1075 /* GetFriendsList.swift */,
 				D978C02424D827A4004D1075 /* GetGroupsList.swift */,
 				D978C02224D807F8004D1075 /* GetPhotosFriend.swift */,
-				D94AD7C225021D6E00902337 /* GetNewsList.swift */,
 				D9008E1324DB39CA0030A376 /* SearchGroup.swift */,
+				D94AD7C225021D6E00902337 /* GetNewsList.swift */,
 				D9008E1824DC1E670030A376 /* RealmOperations.swift */,
 				D943498C24E6AB4300F6E4C5 /* VKService.swift */,
 			);

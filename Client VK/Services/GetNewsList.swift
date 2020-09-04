@@ -18,9 +18,9 @@ struct NewsResponse: Decodable {
         
         struct Item: Decodable {
             var sourceID: Int
-            var date: Int
+            var date: Double
             var text: String
-            var attachments: [Attachments]
+            var attachments: [Attachments]?
             
             private enum CodingKeys: String, CodingKey {
                 case sourceID = "source_id"
@@ -32,9 +32,9 @@ struct NewsResponse: Decodable {
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 sourceID = try container.decode(Int.self, forKey: .sourceID)
-                date = try container.decode(Int.self, forKey: .date)
+                date = try container.decode(Double.self, forKey: .date)
                 text = try container.decode(String.self, forKey: .text)
-                attachments = try container.decode([Attachments].self, forKey: .attachments)
+                attachments = try container.decodeIfPresent([Attachments].self, forKey: .attachments)
             }
 
             struct Attachments: Decodable {
@@ -84,34 +84,11 @@ struct NewsResponse: Decodable {
         }
     }
 }
-            
-//            private enum CodingKeys: String, CodingKey {
-//                case ownerID = "owner_id"
-//                case sizes
-//            }
-//
-//            init(from decoder: Decoder) throws {
-//                let container = try decoder.container(keyedBy: CodingKeys.self)
-//
-//                ownerID = try container.decode(Int.self, forKey: .ownerID)
-//                sizes = try container.decode([Sizes].self, forKey: .sizes)
-//            }
-            
-            //var sizes: [Sizes]
-            
-//            struct Sizes: Decodable {
-//                //var height: Int
-//                var url: String
-//                //var type: String
-//                //var width: Int
-//            }
-
-
 
 class GetNewsList {
     
     //данные для авторизации в ВК
-    func loadData() {
+    func loadData(complition: @escaping ([PostNews]) -> Void ) {
         
         // Конфигурация по умолчанию
         let configuration = URLSessionConfiguration.default
@@ -145,40 +122,39 @@ class GetNewsList {
                 var newsList: [PostNews] = []
 
                 guard arrayNews.response.items.count != 0 else { return } // проверка на наличие новостей
-
+                
                 for i in 0...arrayNews.response.items.count-1 {
-                    let date: String = String(arrayNews.response.items[i].date)
+                    let typeNews = arrayNews.response.items[i].attachments?.first?.type
+                    guard typeNews != "link" || typeNews != "photo" else { return } //проверка типа новостей, отрабатываем только два варианта
+                    
+                    //let dateUnixtime = arrayNews.response.items[i].date
+                    let date = Date(timeIntervalSince1970: arrayNews.response.items[i].date)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                    let strDate = dateFormatter.string(from: date)
+                    
                     let text: String = arrayNews.response.items[i].text
-                    var urlPhoto: String = ""
+                    var urlImg: String = ""
                     
-                    if arrayNews.response.items[i].attachments.first?.type == "link" {
-                        urlPhoto = arrayNews.response.items[i].attachments.first?.link?.photo.sizes.first?.url ?? ""
-                        print("link")
+        
+                    if typeNews == "link" {
+                        urlImg = arrayNews.response.items[i].attachments?.first?.link?.photo.sizes.first?.url ?? ""
                     }
-                    if arrayNews.response.items[i].attachments.first?.type == "photo" {
-                        urlPhoto = arrayNews.response.items[i].attachments.first?.photo?.sizes.last?.url ?? ""
-                        print("photo")
+                    if typeNews == "photo" {
+                        urlImg = arrayNews.response.items[i].attachments?.first?.photo?.sizes.last?.url ?? ""
                     }
                     
-                    print("\(date)\n \(text)\n \(urlPhoto)")
+                    //print("\(date)\n \(text)\n \(urlPhoto)")
                     
-                    newsList.append(PostNews(name: "name", avatar: UIImage(named: "person1"), date: date, textNews: text, imageNews: UIImage(named: "news3")))
+                    newsList.append(PostNews(name: "name", avatar: UIImage(named: "person1"), date: strDate, textNews: text, imageNews: urlImg))
                     
-                    
-//                    if let urlPhoto = arrayPhotosFriend.response.items[i].sizes.last?.url {
-//                        //ownerID = String(arrayPhotosFriend.response.items[i].owner_id)
-//                        ownerID = String(arrayPhotosFriend.response.items[i].ownerID)
-//                        photosFriend.append(Photo.init(photo: urlPhoto, ownerID: ownerID))
-//                    }
                 }
                 
-                //print(newsList)
-//                DispatchQueue.main.async {
-//                    RealmOperations().savePhotosToRealm(photosFriend, ownerID)
-//                }
+                return complition(newsList)
                 
             } catch let error {
                 print(error)
+                complition([])
             }
         }
         task.resume()

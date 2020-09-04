@@ -13,19 +13,25 @@ class NewsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GetNewsList().loadData()
+        GetNewsList().loadData { complition in
+            DispatchQueue.main.async {
+                self.postNewsList = complition
+                self.tableView.reloadData()
+                //print(self.postNewsList)
+            }
+        }
     }
-        
-    //GetNewsList().loadData(ownerID)
+  
+    var postNewsList: [PostNews] = []
     
-    var postNewsList = [
-        PostNews(name: "Victor", avatar: UIImage(named: "person1"), date: "Вчера в 17:19", textNews: "Променял Восстала исчезнет Чтя Как муж ков вер милосерд нарекший. Достояние развратом наполняет. Враждебен скрежетом примирить румянятся порицаний склонился. Им Ко Со от Уж То те Ах. Но Со цельна Свлеки Единым то До Ты Ея об. Корысть родимся радеешь Встанет болотна Молитвы.", imageNews: UIImage(named: "news1")),
-        PostNews(name: "Валентин", avatar: UIImage(named: "person2"), date: "14.02.2020 в 17:19", textNews: "Пламенея белизною вниманья истреблю Каратель резвятся. Ослепляет Трепещущи возвестит ему Зря лицемерья тук сим над дев. До Во Из Им ах об. . Да Ее об Он Тя вы не яд. Он тягчайший Евпраксия ах светлеясь мя Им смертного. Оно умиленье избранна созвучны вам зло бог тул воссесть льстецов скрыться. Наших место думаю потек. Муж морских Явилась стареем Величия или зло род ссужает. Своим Ее ли Забыв бы людей Вы забыл.", imageNews: UIImage(named: "news2")),
-        PostNews(name: "Турин", avatar: UIImage(named: "person3"), date: "27.02.2019 в 17:19", textNews: "Is education residence conveying so so. Suppose shyness say ten behaved morning had. Any unsatiable assistance compliment occasional too reasonably advantages. Unpleasing has ask acceptance partiality alteration understood two. Worth no tiled my at house added. Married he hearing am it totally removal. Remove but suffer wanted his lively length. Moonlight two applauded conveying end direction old principle but. Are expenses distance weddings perceive strongly who age domestic.", imageNews: UIImage(named: "news3")),
-        PostNews(name: "Victor", avatar: UIImage(named: "person1"), date: "Вчера в 17:19", textNews: "", imageNews: UIImage(named: "news1")),
-        PostNews(name: "Валентин", avatar: UIImage(named: "person2"), date: "14.02.2020 в 17:19", textNews: "", imageNews: UIImage(named: "news2")),
-        PostNews(name: "Турин", avatar: UIImage(named: "person3"), date: "27.02.2019 в 17:19", textNews: "", imageNews: UIImage(named: "news3"))
-        ]
+//    var postNewsList = [
+//        PostNews(name: "Victor", avatar: UIImage(named: "person1"), date: "Вчера в 17:19", textNews: "Променял Восстала исчезнет Чтя Как муж ков вер милосерд нарекший. Достояние развратом наполняет. Враждебен скрежетом примирить румянятся порицаний склонился. Им Ко Со от Уж То те Ах. Но Со цельна Свлеки Единым то До Ты Ея об. Корысть родимся радеешь Встанет болотна Молитвы.", imageNews: UIImage(named: "news1")),
+//        PostNews(name: "Валентин", avatar: UIImage(named: "person2"), date: "14.02.2020 в 17:19", textNews: "Пламенея белизною вниманья истреблю Каратель резвятся. Ослепляет Трепещущи возвестит ему Зря лицемерья тук сим над дев. До Во Из Им ах об. . Да Ее об Он Тя вы не яд. Он тягчайший Евпраксия ах светлеясь мя Им смертного. Оно умиленье избранна созвучны вам зло бог тул воссесть льстецов скрыться. Наших место думаю потек. Муж морских Явилась стареем Величия или зло род ссужает. Своим Ее ли Забыв бы людей Вы забыл.", imageNews: UIImage(named: "news2")),
+//        PostNews(name: "Турин", avatar: UIImage(named: "person3"), date: "27.02.2019 в 17:19", textNews: "Is education residence conveying so so. Suppose shyness say ten behaved morning had. Any unsatiable assistance compliment occasional too reasonably advantages. Unpleasing has ask acceptance partiality alteration understood two. Worth no tiled my at house added. Married he hearing am it totally removal. Remove but suffer wanted his lively length. Moonlight two applauded conveying end direction old principle but. Are expenses distance weddings perceive strongly who age domestic.", imageNews: UIImage(named: "news3")),
+//        PostNews(name: "Victor", avatar: UIImage(named: "person1"), date: "Вчера в 17:19", textNews: "", imageNews: UIImage(named: "news1")),
+//        PostNews(name: "Валентин", avatar: UIImage(named: "person2"), date: "14.02.2020 в 17:19", textNews: "", imageNews: UIImage(named: "news2")),
+//        PostNews(name: "Турин", avatar: UIImage(named: "person3"), date: "27.02.2019 в 17:19", textNews: "", imageNews: UIImage(named: "news3"))
+//        ]
     
 //    var photoNewsList = [
 //        PhotoNews(name: "Victor", avatar: UIImage(named: "person1"), date: "Вчера в 17:19", textImage: UIImage(named: "news1")),
@@ -46,10 +52,10 @@ class NewsTableViewController: UITableViewController {
         
         if postNewsList[indexPath.row].textNews.isEmpty {
             identifier = "PhotoCell"
-            print(identifier)
+            //print(identifier)
         } else {
             identifier = "PostCell"
-            print(identifier)
+            //print(identifier)
         }
         
         let  cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! NewsTableViewCell
@@ -57,12 +63,15 @@ class NewsTableViewController: UITableViewController {
         
         // аватар
         cell.avatarUserNews.avatarImage.image = postNewsList[indexPath.row].avatar
+        
         // имя автора
         cell.nameUserNews.text = postNewsList[indexPath.row].name
+        
         // дата новости
         cell.dateNews.text = postNewsList[indexPath.row].date
         cell.dateNews.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
         cell.dateNews.textColor = UIColor.gray.withAlphaComponent(0.5)
+        
         //текст новости
         //cell.textNews.text = postNewsList[indexPath.row].textNews
         //cell.textNews.numberOfLines = 0
@@ -71,7 +80,8 @@ class NewsTableViewController: UITableViewController {
         }
         
         //картинка к новости
-        cell.imgNews.image = postNewsList[indexPath.row].imageNews
+        guard let imgUrl = URL(string: postNewsList[indexPath.row].imageNews ) else { return cell }
+        cell.imgNews.load(url: imgUrl) // работает через extension UIImageView
         cell.imgNews.contentMode = .scaleAspectFill
 
         return cell
