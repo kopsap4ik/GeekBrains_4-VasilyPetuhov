@@ -10,6 +10,14 @@ import UIKit
 
 class NewsTableViewController: UITableViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GetNewsList().loadData()
+    }
+        
+    //GetNewsList().loadData(ownerID)
+    
     var postNewsList = [
         PostNews(name: "Victor", avatar: UIImage(named: "person1"), date: "Вчера в 17:19", textNews: "Променял Восстала исчезнет Чтя Как муж ков вер милосерд нарекший. Достояние развратом наполняет. Враждебен скрежетом примирить румянятся порицаний склонился. Им Ко Со от Уж То те Ах. Но Со цельна Свлеки Единым то До Ты Ея об. Корысть родимся радеешь Встанет болотна Молитвы.", imageNews: UIImage(named: "news1")),
         PostNews(name: "Валентин", avatar: UIImage(named: "person2"), date: "14.02.2020 в 17:19", textNews: "Пламенея белизною вниманья истреблю Каратель резвятся. Ослепляет Трепещущи возвестит ему Зря лицемерья тук сим над дев. До Во Из Им ах об. . Да Ее об Он Тя вы не яд. Он тягчайший Евпраксия ах светлеясь мя Им смертного. Оно умиленье избранна созвучны вам зло бог тул воссесть льстецов скрыться. Наших место думаю потек. Муж морских Явилась стареем Величия или зло род ссужает. Своим Ее ли Забыв бы людей Вы забыл.", imageNews: UIImage(named: "news2")),
