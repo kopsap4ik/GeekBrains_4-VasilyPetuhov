@@ -15,6 +15,7 @@ struct NewsResponse: Decodable {
     struct Response: Decodable {
         var items: [Item]
         var groups: [Groups]
+        var profiles: [Profiles]
         
         struct Item: Decodable {
             var sourceID: Int
@@ -82,6 +83,28 @@ struct NewsResponse: Decodable {
                 avatar = try container.decode(String.self, forKey: .avatar)
             }
         }
+        
+        struct Profiles: Decodable {
+            var id: Int
+            var firstName: String
+            var lastName: String
+            var avatar: String
+            
+            private enum CodingKeys: String, CodingKey {
+                case id
+                case firstName = "first_name"
+                case lastName = "last_name"
+                case avatar = "photo_50"
+            }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                id = try container.decode(Int.self, forKey: .id)
+                firstName = try container.decode(String.self, forKey: .firstName)
+                lastName = try container.decode(String.self, forKey: .lastName)
+                avatar = try container.decode(String.self, forKey: .avatar)
+            }
+        }
     }
 }
 
@@ -117,26 +140,28 @@ class GetNewsList {
             
             do {
                 let arrayNews = try JSONDecoder().decode(NewsResponse.self, from: data)
-                //print(arrayNews)
+                
+                guard arrayNews.response.items.isEmpty == false else { return } // проверка на наличие новостей
+                
+                var avatar: String = ""
+                var name: String = ""
+                var strDate: String
+                var text: String
+                var urlImg: String = ""
                 
                 var newsList: [PostNews] = []
-
-                guard arrayNews.response.items.count != 0 else { return } // проверка на наличие новостей
                 
                 for i in 0...arrayNews.response.items.count-1 {
                     let typeNews = arrayNews.response.items[i].attachments?.first?.type
                     guard typeNews != "link" || typeNews != "photo" else { return } //проверка типа новостей, отрабатываем только два варианта
                     
-                    //let dateUnixtime = arrayNews.response.items[i].date
-                    let date = Date(timeIntervalSince1970: arrayNews.response.items[i].date)
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                    let strDate = dateFormatter.string(from: date)
+                    let date = Date(timeIntervalSince1970: arrayNews.response.items[i].date)
+                    strDate = dateFormatter.string(from: date)
                     
-                    let text: String = arrayNews.response.items[i].text
-                    var urlImg: String = ""
+                    text = arrayNews.response.items[i].text
                     
-        
                     if typeNews == "link" {
                         urlImg = arrayNews.response.items[i].attachments?.first?.link?.photo.sizes.first?.url ?? ""
                     }
@@ -144,10 +169,23 @@ class GetNewsList {
                         urlImg = arrayNews.response.items[i].attachments?.first?.photo?.sizes.last?.url ?? ""
                     }
                     
-                    //print("\(date)\n \(text)\n \(urlPhoto)")
+                    let sourceID = arrayNews.response.items[i].sourceID * -1
+                    print(arrayNews.response.groups.map { $0.id })
+//                    if arrayNews.response.groups.contains(where: { $0.id == sourceID }){
+//
+//                    }
                     
-                    newsList.append(PostNews(name: "name", avatar: UIImage(named: "person1"), date: strDate, textNews: text, imageNews: urlImg))
+                    //print(arrayNews.response.groups.map { $0.id == sourceID })
                     
+                      // много вложенных циклов!
+                    for i in 0...arrayNews.response.groups.count-1 {
+                        if arrayNews.response.groups[i].id == sourceID {
+                            name = arrayNews.response.groups[i].name
+                            avatar = arrayNews.response.groups[i].avatar
+                        }
+                    }
+                    
+                    newsList.append(PostNews(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg))
                 }
                 
                 return complition(newsList)
