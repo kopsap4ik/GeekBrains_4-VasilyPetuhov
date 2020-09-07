@@ -21,7 +21,7 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
 //        VKService().loadData(.friends) { () in
 //
 //        }
-                
+            
         subscribeToNotificationRealm() // подписка на нотификации реалма + обновление таблицы
         
         // запуск обновления данных из сети, запись в Реалм и загрузка из реалма новых данных
@@ -90,18 +90,28 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // получить ячейку класса FriendTableViewCell
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsCell", for: indexPath) as! FriendsTableViewCell
+//printTime()
         
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsCell", for: indexPath) as! FriendsTableViewCell
+//printTime()
         // задать имя пользователя (ищет по буквам для расстановки по секциям) + сортировка по алфавиту
         cell.nameFriendLabel.text = self.getNameFriendForCell(indexPath)
-        
+//printTime()
         //задать аватар для друга (грузит по ссылке: 2 способа)
         guard let imgUrl = self.getAvatarFriendForCell(indexPath) else { return cell }
-            let avatar = ImageResource(downloadURL: imgUrl) //работает через Kingfisher
-            cell.avatarFriendView.avatarImage.kf.indicatorType = .activity
-            cell.avatarFriendView.avatarImage.kf.setImage(with: avatar)
 
+// краш так как работа с реалмом не может быть не в главном потоке...
+//DispatchQueue.global().async {
+//guard let imgUrl = self.getAvatarFriendForCell(indexPath) else { return }
+//self.printTime()
+        let avatar = ImageResource(downloadURL: imgUrl) //работает через Kingfisher
+        cell.avatarFriendView.avatarImage.kf.indicatorType = .activity
+        cell.avatarFriendView.avatarImage.kf.setImage(with: avatar)
+//}
+        
+//printTime()
 //            cell.avatarFriendView.avatarImage.load(url: imgUrl) // работает через extension UIImageView
+        
         return cell
     }
     
@@ -112,6 +122,15 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
     
     
     // MARK: - Functions
+    
+    //тестовая функция для отображения времени
+    func printTime() {
+        let d = Date()
+        let df = DateFormatter()
+        df.dateFormat = "mm:ss.SSSS"
+
+        print(df.string(from: d))
+    }
     
     private func subscribeToNotificationRealm() {
         notificationToken = friendsFromRealm.observe { [weak self] (changes) in

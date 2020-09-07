@@ -161,7 +161,7 @@ class GetNewsList {
               
         // задача для запуска
         let task = session.dataTask(with: urlConstructor.url!) { (data, response, error) in
-            print("Запрос к API: \(urlConstructor.url!)")
+            //print("Запрос к API: \(urlConstructor.url!)")
             
             // в замыкании данные, полученные от сервера, мы преобразуем в json
             guard let data = data else { return }
@@ -181,7 +181,7 @@ class GetNewsList {
                 
                 for i in 0...arrayNews.response.items.count-1 {
                     let typeNews = arrayNews.response.items[i].attachments?.first?.type
-                    //guard typeNews != "link" || typeNews != "photo" else { return } //проверка типа новостей, отрабатываем только два варианта
+                    guard typeNews != "link" || typeNews != "photo" else { return } //проверка типа новостей, отрабатываем только два варианта
                     
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
