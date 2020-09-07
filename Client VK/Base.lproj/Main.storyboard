@@ -365,8 +365,8 @@
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvU-E9-5kV">
-                                                    <rect key="frame" x="140" y="4" width="21" height="22"/>
-                                                    <state key="normal" image="arrowshape.turn.up.right" catalog="system">
+                                                    <rect key="frame" x="140" y="4" width="32" height="22"/>
+                                                    <state key="normal" title="0" image="arrowshape.turn.up.right" catalog="system">
                                                         <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                 </button>
@@ -425,10 +425,12 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarUserNews" destination="rX0-F7-1Tr" id="s2y-la-2fM"/>
+                                    <outlet property="comments" destination="rxf-6C-CZX" id="12W-YU-idh"/>
                                     <outlet property="dateNews" destination="8L2-SS-8kd" id="on0-sr-ev5"/>
                                     <outlet property="imgNews" destination="yEw-l7-P7d" id="OsE-ad-xKH"/>
                                     <outlet property="likesCount" destination="apT-PN-RvZ" id="gIc-Ge-XYf"/>
                                     <outlet property="nameUserNews" destination="pJW-zE-FIW" id="QL3-nM-rcr"/>
+                                    <outlet property="repostsCount" destination="pvU-E9-5kV" id="WnW-5m-DsV"/>
                                     <outlet property="textNewsPost" destination="jNc-v9-BhL" id="JKI-uI-53B"/>
                                 </connections>
                             </tableViewCell>
@@ -497,8 +499,8 @@
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83v-uG-Nmk">
-                                                    <rect key="frame" x="140" y="4" width="21" height="22"/>
-                                                    <state key="normal" image="arrowshape.turn.up.right" catalog="system">
+                                                    <rect key="frame" x="140" y="4" width="32" height="22"/>
+                                                    <state key="normal" title="0" image="arrowshape.turn.up.right" catalog="system">
                                                         <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                 </button>
@@ -557,10 +559,12 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarUserNews" destination="Suv-gF-GCr" id="zc8-yP-wwX"/>
+                                    <outlet property="comments" destination="CEi-vt-CJd" id="FLc-ze-dfw"/>
                                     <outlet property="dateNews" destination="G9s-T3-T1n" id="aIX-7t-fU1"/>
                                     <outlet property="imgNews" destination="fqN-PN-lnl" id="OT0-yr-dGO"/>
                                     <outlet property="likesCount" destination="bol-RC-Uf6" id="MO2-W9-iEU"/>
                                     <outlet property="nameUserNews" destination="IRE-2N-9a7" id="UBx-jt-z6C"/>
+                                    <outlet property="repostsCount" destination="83v-uG-Nmk" id="di6-Zc-w4Q"/>
                                     <outlet property="textNews" destination="qEX-pW-u0N" id="5R8-rS-led"/>
                                 </connections>
                             </tableViewCell>

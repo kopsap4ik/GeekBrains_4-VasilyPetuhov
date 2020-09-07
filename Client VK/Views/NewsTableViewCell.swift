@@ -18,5 +18,7 @@ class NewsTableViewCell: UITableViewCell {
     @IBOutlet weak var imgNews: UIImageView!
     
     @IBOutlet weak var likesCount: LikeControl!
+    @IBOutlet weak var comments: UIButton!
+    @IBOutlet weak var repostsCount: UIButton!
     
 }

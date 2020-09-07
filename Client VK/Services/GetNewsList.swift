@@ -22,6 +22,8 @@ struct NewsResponse: Decodable {
             var date: Double
             var text: String
             var likes: Likes
+            var comments: Comments
+            var reposts: Reposts
             var attachments: [Attachments]?
             
             private enum CodingKeys: String, CodingKey {
@@ -29,6 +31,8 @@ struct NewsResponse: Decodable {
                 case date
                 case text
                 case likes
+                case comments
+                case reposts
                 case attachments
             }
 
@@ -38,10 +42,20 @@ struct NewsResponse: Decodable {
                 date = try container.decode(Double.self, forKey: .date)
                 text = try container.decode(String.self, forKey: .text)
                 likes = try container.decode(Likes.self, forKey: .likes)
+                comments = try container.decode(Comments.self, forKey: .comments)
+                reposts = try container.decode(Reposts.self, forKey: .reposts)
                 attachments = try container.decodeIfPresent([Attachments].self, forKey: .attachments)
             }
 
             struct Likes: Decodable {
+                var count: Int
+            }
+            
+            struct Comments: Decodable {
+                var count: Int
+            }
+            
+            struct Reposts: Decodable {
                 var count: Int
             }
             
@@ -176,27 +190,31 @@ class GetNewsList {
                         urlImg = arrayNews.response.items[i].attachments?.first?.photo?.sizes.last?.url ?? ""
                     }
                     
-                    
                     let likes = arrayNews.response.items[i].likes.count
-                    print(likes)
                     
+                    let comments = arrayNews.response.items[i].comments.count
+                    
+                    let reposts = arrayNews.response.items[i].reposts.count
+
+                    
+                   
+                // имена и аватарки групп
+                   // много вложенных циклов!
                     let sourceID = arrayNews.response.items[i].sourceID * -1
-//                    print(arrayNews.response.groups.map { $0.id })
-//                    if arrayNews.response.groups.contains(where: { $0.id == sourceID }){
-//
-//                    }
-                    
-                    //print(arrayNews.response.groups.map { $0.id == sourceID })
-                    
-                      // много вложенных циклов!
                     for i in 0...arrayNews.response.groups.count-1 {
                         if arrayNews.response.groups[i].id == sourceID {
                             name = arrayNews.response.groups[i].name
                             avatar = arrayNews.response.groups[i].avatar
                         }
                     }
+//                    print(arrayNews.response.groups.map { $0.id })
+//                    if arrayNews.response.groups.contains(where: { $0.id == sourceID }){
+//
+//                    }
+//
+//                    print(arrayNews.response.groups.map { $0.id == sourceID })
                     
-                    newsList.append(PostNews(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, likes: likes))
+                    newsList.append(PostNews(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, likes: likes, comments: comments, reposts: reposts))
                 }
                 
                 return complition(newsList)

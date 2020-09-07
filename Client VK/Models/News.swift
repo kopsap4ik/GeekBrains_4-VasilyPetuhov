@@ -15,6 +15,8 @@ struct PostNews {
     var textNews: String
     var imageNews: String
     var likes: Int
+    var comments: Int
+    var reposts: Int
 }
 
 //struct PhotoNews {

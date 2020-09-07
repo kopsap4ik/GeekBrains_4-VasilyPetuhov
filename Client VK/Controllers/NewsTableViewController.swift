@@ -70,8 +70,12 @@ class NewsTableViewController: UITableViewController {
         cell.likesCount.countLikes = postNewsList[indexPath.row].likes // значение для счетчика
         cell.likesCount.labelLikes.text = String(postNewsList[indexPath.row].likes) // вывод количества лайков
         
-        //print(postNewsList[indexPath.row])
-    
+        // комментарии
+        cell.comments.setTitle(String(postNewsList[indexPath.row].comments), for: .normal)  // вывод количества лайков
+        
+        // репосты
+        cell.repostsCount.setTitle(String(postNewsList[indexPath.row].reposts), for: .normal)  // вывод количества лайков
+        
 
         return cell
     }
