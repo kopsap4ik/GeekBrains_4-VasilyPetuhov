@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -427,6 +427,7 @@
                                     <outlet property="avatarUserNews" destination="rX0-F7-1Tr" id="s2y-la-2fM"/>
                                     <outlet property="dateNews" destination="8L2-SS-8kd" id="on0-sr-ev5"/>
                                     <outlet property="imgNews" destination="yEw-l7-P7d" id="OsE-ad-xKH"/>
+                                    <outlet property="likesCount" destination="apT-PN-RvZ" id="gIc-Ge-XYf"/>
                                     <outlet property="nameUserNews" destination="pJW-zE-FIW" id="QL3-nM-rcr"/>
                                     <outlet property="textNewsPost" destination="jNc-v9-BhL" id="JKI-uI-53B"/>
                                 </connections>
@@ -558,6 +559,7 @@
                                     <outlet property="avatarUserNews" destination="Suv-gF-GCr" id="zc8-yP-wwX"/>
                                     <outlet property="dateNews" destination="G9s-T3-T1n" id="aIX-7t-fU1"/>
                                     <outlet property="imgNews" destination="fqN-PN-lnl" id="OT0-yr-dGO"/>
+                                    <outlet property="likesCount" destination="bol-RC-Uf6" id="MO2-W9-iEU"/>
                                     <outlet property="nameUserNews" destination="IRE-2N-9a7" id="UBx-jt-z6C"/>
                                     <outlet property="textNews" destination="qEX-pW-u0N" id="5R8-rS-led"/>
                                 </connections>

@@ -65,6 +65,13 @@ class NewsTableViewController: UITableViewController {
         guard let imgUrl = URL(string: postNewsList[indexPath.row].imageNews ) else { return cell }
         cell.imgNews.load(url: imgUrl) // работает через extension UIImageView
         cell.imgNews.contentMode = .scaleAspectFill
+        
+        // лайки
+        cell.likesCount.countLikes = postNewsList[indexPath.row].likes // значение для счетчика
+        cell.likesCount.labelLikes.text = String(postNewsList[indexPath.row].likes) // вывод количества лайков
+        
+        //print(postNewsList[indexPath.row])
+    
 
         return cell
     }

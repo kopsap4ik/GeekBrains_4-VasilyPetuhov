@@ -21,12 +21,14 @@ struct NewsResponse: Decodable {
             var sourceID: Int
             var date: Double
             var text: String
+            var likes: Likes
             var attachments: [Attachments]?
             
             private enum CodingKeys: String, CodingKey {
                 case sourceID = "source_id"
                 case date
                 case text
+                case likes
                 case attachments
             }
 
@@ -35,9 +37,14 @@ struct NewsResponse: Decodable {
                 sourceID = try container.decode(Int.self, forKey: .sourceID)
                 date = try container.decode(Double.self, forKey: .date)
                 text = try container.decode(String.self, forKey: .text)
+                likes = try container.decode(Likes.self, forKey: .likes)
                 attachments = try container.decodeIfPresent([Attachments].self, forKey: .attachments)
             }
 
+            struct Likes: Decodable {
+                var count: Int
+            }
+            
             struct Attachments: Decodable {
                 var type: String
                 var photo: Photo?
@@ -153,7 +160,7 @@ class GetNewsList {
                 
                 for i in 0...arrayNews.response.items.count-1 {
                     let typeNews = arrayNews.response.items[i].attachments?.first?.type
-                    guard typeNews != "link" || typeNews != "photo" else { return } //проверка типа новостей, отрабатываем только два варианта
+                    //guard typeNews != "link" || typeNews != "photo" else { return } //проверка типа новостей, отрабатываем только два варианта
                     
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
@@ -169,8 +176,12 @@ class GetNewsList {
                         urlImg = arrayNews.response.items[i].attachments?.first?.photo?.sizes.last?.url ?? ""
                     }
                     
+                    
+                    let likes = arrayNews.response.items[i].likes.count
+                    print(likes)
+                    
                     let sourceID = arrayNews.response.items[i].sourceID * -1
-                    print(arrayNews.response.groups.map { $0.id })
+//                    print(arrayNews.response.groups.map { $0.id })
 //                    if arrayNews.response.groups.contains(where: { $0.id == sourceID }){
 //
 //                    }
@@ -185,7 +196,7 @@ class GetNewsList {
                         }
                     }
                     
-                    newsList.append(PostNews(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg))
+                    newsList.append(PostNews(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, likes: likes))
                 }
                 
                 return complition(newsList)
