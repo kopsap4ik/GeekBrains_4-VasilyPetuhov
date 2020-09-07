@@ -17,6 +17,7 @@ struct PostNews {
     var likes: Int
     var comments: Int
     var reposts: Int
+    var views: Int
 }
 
 //struct PhotoNews {

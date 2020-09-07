@@ -71,10 +71,13 @@ class NewsTableViewController: UITableViewController {
         cell.likesCount.labelLikes.text = String(postNewsList[indexPath.row].likes) // вывод количества лайков
         
         // комментарии
-        cell.comments.setTitle(String(postNewsList[indexPath.row].comments), for: .normal)  // вывод количества лайков
+        cell.commentsCount.setTitle(String(postNewsList[indexPath.row].comments), for: .normal)
         
         // репосты
-        cell.repostsCount.setTitle(String(postNewsList[indexPath.row].reposts), for: .normal)  // вывод количества лайков
+        cell.repostsCount.setTitle(String(postNewsList[indexPath.row].reposts), for: .normal)
+        
+        // просмотры
+        cell.viewsCount.setTitle(String(postNewsList[indexPath.row].views), for: .normal)
         
 
         return cell

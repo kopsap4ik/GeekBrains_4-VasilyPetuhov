@@ -425,13 +425,14 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarUserNews" destination="rX0-F7-1Tr" id="s2y-la-2fM"/>
-                                    <outlet property="comments" destination="rxf-6C-CZX" id="12W-YU-idh"/>
+                                    <outlet property="commentsCount" destination="rxf-6C-CZX" id="12W-YU-idh"/>
                                     <outlet property="dateNews" destination="8L2-SS-8kd" id="on0-sr-ev5"/>
                                     <outlet property="imgNews" destination="yEw-l7-P7d" id="OsE-ad-xKH"/>
                                     <outlet property="likesCount" destination="apT-PN-RvZ" id="gIc-Ge-XYf"/>
                                     <outlet property="nameUserNews" destination="pJW-zE-FIW" id="QL3-nM-rcr"/>
                                     <outlet property="repostsCount" destination="pvU-E9-5kV" id="WnW-5m-DsV"/>
                                     <outlet property="textNewsPost" destination="jNc-v9-BhL" id="JKI-uI-53B"/>
+                                    <outlet property="viewsCount" destination="6cq-Jr-OHI" id="V1z-iP-F1B"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PhotoCell" id="NFR-ri-MDy" customClass="NewsTableViewCell" customModule="Client_VK" customModuleProvider="target">
@@ -559,13 +560,14 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarUserNews" destination="Suv-gF-GCr" id="zc8-yP-wwX"/>
-                                    <outlet property="comments" destination="CEi-vt-CJd" id="FLc-ze-dfw"/>
+                                    <outlet property="commentsCount" destination="CEi-vt-CJd" id="FLc-ze-dfw"/>
                                     <outlet property="dateNews" destination="G9s-T3-T1n" id="aIX-7t-fU1"/>
                                     <outlet property="imgNews" destination="fqN-PN-lnl" id="OT0-yr-dGO"/>
                                     <outlet property="likesCount" destination="bol-RC-Uf6" id="MO2-W9-iEU"/>
                                     <outlet property="nameUserNews" destination="IRE-2N-9a7" id="UBx-jt-z6C"/>
                                     <outlet property="repostsCount" destination="83v-uG-Nmk" id="di6-Zc-w4Q"/>
                                     <outlet property="textNews" destination="qEX-pW-u0N" id="5R8-rS-led"/>
+                                    <outlet property="viewsCount" destination="IPL-lt-anj" id="UxL-fn-j9D"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

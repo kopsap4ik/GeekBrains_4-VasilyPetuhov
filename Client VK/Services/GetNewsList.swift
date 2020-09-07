@@ -24,6 +24,7 @@ struct NewsResponse: Decodable {
             var likes: Likes
             var comments: Comments
             var reposts: Reposts
+            var views: Views
             var attachments: [Attachments]?
             
             private enum CodingKeys: String, CodingKey {
@@ -33,6 +34,7 @@ struct NewsResponse: Decodable {
                 case likes
                 case comments
                 case reposts
+                case views
                 case attachments
             }
 
@@ -44,6 +46,7 @@ struct NewsResponse: Decodable {
                 likes = try container.decode(Likes.self, forKey: .likes)
                 comments = try container.decode(Comments.self, forKey: .comments)
                 reposts = try container.decode(Reposts.self, forKey: .reposts)
+                views = try container.decode(Views.self, forKey: .views)
                 attachments = try container.decodeIfPresent([Attachments].self, forKey: .attachments)
             }
 
@@ -56,6 +59,10 @@ struct NewsResponse: Decodable {
             }
             
             struct Reposts: Decodable {
+                var count: Int
+            }
+            
+            struct Views: Decodable {
                 var count: Int
             }
             
@@ -191,12 +198,10 @@ class GetNewsList {
                     }
                     
                     let likes = arrayNews.response.items[i].likes.count
-                    
                     let comments = arrayNews.response.items[i].comments.count
-                    
                     let reposts = arrayNews.response.items[i].reposts.count
+                    let views = arrayNews.response.items[i].views.count
 
-                    
                    
                 // имена и аватарки групп
                    // много вложенных циклов!
@@ -214,7 +219,7 @@ class GetNewsList {
 //
 //                    print(arrayNews.response.groups.map { $0.id == sourceID })
                     
-                    newsList.append(PostNews(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, likes: likes, comments: comments, reposts: reposts))
+                    newsList.append(PostNews(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, likes: likes, comments: comments, reposts: reposts, views: views))
                 }
                 
                 return complition(newsList)
