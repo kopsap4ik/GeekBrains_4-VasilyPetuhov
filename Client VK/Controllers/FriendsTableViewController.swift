@@ -90,27 +90,31 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // получить ячейку класса FriendTableViewCell
         
-//printTime()
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsCell", for: indexPath) as! FriendsTableViewCell
-//printTime()
+
         // задать имя пользователя (ищет по буквам для расстановки по секциям) + сортировка по алфавиту
         cell.nameFriendLabel.text = self.getNameFriendForCell(indexPath)
-//printTime()
+        //print(indexPath)
+        
+//        let name = self.getNameFriendForCell(indexPath)
+//        cell.nameFriendLabel.text = name
+        
+
         //задать аватар для друга (грузит по ссылке: 2 способа)
         guard let imgUrl = self.getAvatarFriendForCell(indexPath) else { return cell }
-
-// краш так как работа с реалмом не может быть не в главном потоке...
-//DispatchQueue.global().async {
-//guard let imgUrl = self.getAvatarFriendForCell(indexPath) else { return }
-//self.printTime()
         let avatar = ImageResource(downloadURL: imgUrl) //работает через Kingfisher
         cell.avatarFriendView.avatarImage.kf.indicatorType = .activity
         cell.avatarFriendView.avatarImage.kf.setImage(with: avatar)
+//        cell.avatarFriendView.avatarImage.load(url: imgUrl) // работает через extension UIImageView
+
+// краш так как работа с реалмом не может быть не в главном потоке...
+//DispatchQueue.global().async {
+//    guard let imgUrl = self.getAvatarFriendForCell(indexPath) else { return }
+//    let avatar = ImageResource(downloadURL: imgUrl) //работает через Kingfisher
+//    cell.avatarFriendView.avatarImage.kf.indicatorType = .activity
+//    cell.avatarFriendView.avatarImage.kf.setImage(with: avatar)
+//
 //}
-        
-//printTime()
-//            cell.avatarFriendView.avatarImage.load(url: imgUrl) // работает через extension UIImageView
         
         return cell
     }
@@ -140,15 +144,6 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
             //case let .update (_, deletions, insertions, modifications):
             case .update:
                 self?.loadFriendsFromRealm()
-
-                //self?.tableView.beginUpdates()
-                
-                // крашится при вызове, так как не попадает в секции, надо перерабатывать логику
-                //self?.tableView.deleteRows(at: deletions.map{ IndexPath(row: $0, section: 0) }, with: .automatic)
-                //self?.tableView.insertRows(at: insertions.map{ IndexPath(row: $0, section: 0) }, with: .automatic)
-                //self?.tableView.reloadRows(at: modifications.map{ IndexPath(row: $0, section: 0) }, with: .automatic)
-                
-                //self?.tableView.endUpdates()
             case let .error(error):
                 print(error)
             }
@@ -169,37 +164,41 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
         for item in 0...(friendsList.count - 1){
             namesListFixed.append(friendsList[item].userName)
         }
-        namesListModifed = namesListFixed
+        namesListModifed = namesListFixed.sorted()
     }
     
     // созданием массива из начальных букв имен пользователй по алфавиту
     func sortCharacterOfNamesAlphabet() {
         var letersSet = Set<Character>()
         letersOfNames = [] // обнуляем массив на случай повторного использования
-        // создание сета из первых букв имени, чтобы не было повторов
+        
+        // создание сета <Character> из первых букв имени, чтобы не было повторов
         for name in namesListModifed {
             letersSet.insert(name[name.startIndex])
         }
-        // заполнение массива строк из букв имен
+        
+        // заполнение массива из букв имен
         for leter in letersSet.sorted() {
             letersOfNames.append(String(leter))
         }
     }
     
     func getNameFriendForCell(_ indexPath: IndexPath) -> String {
-        var namesRows = [String]()
-        for name in namesListModifed.sorted() {
-            if letersOfNames[indexPath.section].contains(name.first!) {
-                namesRows.append(name)
+        var namesArray = [String]()
+        let letter = letersOfNames[indexPath.section]
+                
+        for name in namesListModifed {
+            if letter.contains(name.first!) {
+                namesArray.append(name)
             }
         }
-        return namesRows[indexPath.row]
+        return namesArray[indexPath.row]
     }
     
     func getAvatarFriendForCell(_ indexPath: IndexPath) -> URL? {
+        let namesArray = getNameFriendForCell(indexPath)
         for friend in friendsList {
-            let namesRows = getNameFriendForCell(indexPath)
-            if friend.userName.contains(namesRows) {
+            if friend.userName.contains(namesArray) {
                 return URL(string: friend.userAvatar)
             }
         }
@@ -208,9 +207,9 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
     
     func getIDFriend(_ indexPath: IndexPath) -> String {
         var ownerIDs = ""
+        let namesArray = getNameFriendForCell(indexPath)
         for friend in friendsList {
-            let namesRows = getNameFriendForCell(indexPath)
-            if friend.userName.contains(namesRows) {
+            if friend.userName.contains(namesArray) {
                 ownerIDs = friend.ownerID
             }
         }
