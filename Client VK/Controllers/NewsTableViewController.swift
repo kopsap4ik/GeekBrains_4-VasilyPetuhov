@@ -35,17 +35,13 @@ class NewsTableViewController: UITableViewController {
         
         if postNewsList[indexPath.row].textNews.isEmpty {
             identifier = "PhotoCell"
-            //print(identifier)
         } else {
             identifier = "PostCell"
-            //print(identifier)
         }
         
         let  cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! NewsTableViewCell
-        //let  cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! NewsTableViewCell
         
         // аватар
-        //cell.avatarUserNews.avatarImage.image = postNewsList[indexPath.row].avatar
         guard let avatarUrl = URL(string: postNewsList[indexPath.row].avatar ) else { return cell }
         cell.avatarUserNews.avatarImage.load(url: avatarUrl) // работает через extension UIImageView
         
@@ -56,15 +52,6 @@ class NewsTableViewController: UITableViewController {
         cell.dateNews.text = postNewsList[indexPath.row].date
         cell.dateNews.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
         cell.dateNews.textColor = UIColor.gray.withAlphaComponent(0.5)
-        
-        if identifier == "PostCell" {
-            cell.textNewsPost.text = postNewsList[indexPath.row].textNews
-        }
-        
-        //картинка к новости
-        guard let imgUrl = URL(string: postNewsList[indexPath.row].imageNews ) else { return cell }
-        cell.imgNews.load(url: imgUrl) // работает через extension UIImageView
-        cell.imgNews.contentMode = .scaleAspectFill
         
         // лайки
         cell.likesCount.countLikes = postNewsList[indexPath.row].likes // значение для счетчика
@@ -79,6 +66,16 @@ class NewsTableViewController: UITableViewController {
         // просмотры
         cell.viewsCount.setTitle(String(postNewsList[indexPath.row].views), for: .normal)
         
+        // текст новости
+        if identifier == "PostCell" {
+            cell.textNewsPost.text = postNewsList[indexPath.row].textNews
+        }
+        
+        //картинка к новости
+        guard let imgUrl = URL(string: postNewsList[indexPath.row].imageNews ) else { return cell }
+        cell.imgNews.load(url: imgUrl) // работает через extension UIImageView
+        cell.imgNews.contentMode = .scaleAspectFill
+
 
         return cell
     }

@@ -155,7 +155,7 @@ class GetNewsList {
             URLQueryItem(name: "owner_id", value: String(Session.instance.userId)),
             URLQueryItem(name: "access_token", value: Session.instance.token),
             URLQueryItem(name: "filters", value: "post,photo"),
-            URLQueryItem(name: "count", value: "10"),
+            //URLQueryItem(name: "count", value: "10"),
             URLQueryItem(name: "v", value: "5.122")
         ]
         
