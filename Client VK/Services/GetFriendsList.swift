@@ -102,16 +102,4 @@ class GetFriendsList {
         task.resume()
     }
     
-    //    func saveFriendsToRealm(_ friendList: [Friend]) {
-    //        do {
-    //            let realm = try Realm()
-    //            try realm.write{
-    //                realm.add(friendList)
-    //            }
-    //        } catch {
-    //            print(error)
-    //        }
-    //    }
-    
-    
 }

@@ -13,10 +13,10 @@ class NewsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GetNewsList().loadData { complition in
+        GetNewsList().loadData { [weak self] (complition) in
             DispatchQueue.main.async {
-                self.postNewsList = complition
-                self.tableView.reloadData()
+                self?.postNewsList = complition
+                self?.tableView.reloadData()
             }
         }
     }

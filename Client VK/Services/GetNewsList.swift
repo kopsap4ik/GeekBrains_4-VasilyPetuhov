@@ -37,7 +37,7 @@ struct NewsResponse: Decodable {
                 case views
                 case attachments
             }
-
+            
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 sourceID = try container.decode(Int.self, forKey: .sourceID)
@@ -49,7 +49,7 @@ struct NewsResponse: Decodable {
                 views = try container.decode(Views.self, forKey: .views)
                 attachments = try container.decodeIfPresent([Attachments].self, forKey: .attachments)
             }
-
+            
             struct Likes: Decodable {
                 var count: Int
             }
@@ -70,21 +70,21 @@ struct NewsResponse: Decodable {
                 var type: String
                 var photo: Photo?
                 var link: Link?
-
+                
                 struct Photo: Decodable {
                     var sizes: [Sizes]
-
+                    
                     struct Sizes: Decodable {
                         var url: String
                     }
                 }
-
+                
                 struct Link: Decodable {
                     var photo: LinkPhoto
                     
                     struct LinkPhoto: Decodable {
                         var sizes: [Sizes]
-
+                        
                         struct Sizes: Decodable {
                             var url: String
                         }
@@ -103,7 +103,7 @@ struct NewsResponse: Decodable {
                 case name
                 case avatar = "photo_50"
             }
-
+            
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 id = try container.decode(Int.self, forKey: .id)
@@ -124,7 +124,7 @@ struct NewsResponse: Decodable {
                 case lastName = "last_name"
                 case avatar = "photo_50"
             }
-
+            
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 id = try container.decode(Int.self, forKey: .id)
@@ -158,7 +158,7 @@ class GetNewsList {
             URLQueryItem(name: "count", value: "10"),
             URLQueryItem(name: "v", value: "5.122")
         ]
-              
+        
         // задача для запуска
         let task = session.dataTask(with: urlConstructor.url!) { (data, response, error) in
             //print("Запрос к API: \(urlConstructor.url!)")
@@ -201,10 +201,10 @@ class GetNewsList {
                     let comments = arrayNews.response.items[i].comments.count
                     let reposts = arrayNews.response.items[i].reposts.count
                     let views = arrayNews.response.items[i].views.count
-
-                   
-                // имена и аватарки групп
-                   // много вложенных циклов!
+                    
+                    
+                    // имена и аватарки групп
+                    // много вложенных циклов!
                     let sourceID = arrayNews.response.items[i].sourceID * -1
                     for i in 0...arrayNews.response.groups.count-1 {
                         if arrayNews.response.groups[i].id == sourceID {
@@ -212,16 +212,9 @@ class GetNewsList {
                             avatar = arrayNews.response.groups[i].avatar
                         }
                     }
-//                    print(arrayNews.response.groups.map { $0.id })
-//                    if arrayNews.response.groups.contains(where: { $0.id == sourceID }){
-//
-//                    }
-//
-//                    print(arrayNews.response.groups.map { $0.id == sourceID })
                     
                     newsList.append(PostNews(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, likes: likes, comments: comments, reposts: reposts, views: views))
                 }
-                
                 return complition(newsList)
                 
             } catch let error {

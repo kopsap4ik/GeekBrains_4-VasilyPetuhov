@@ -97,15 +97,5 @@ class GetGroupsList {
         
     }
     
-//    func saveGroupsToRealm(_ grougList: [Group]) {
-//        do {
-//            let realm = try Realm()
-//            try realm.write{
-//                realm.add(grougList)
-//            }
-//        } catch {
-//            print(error)
-//        }
-//    }
     
 }
