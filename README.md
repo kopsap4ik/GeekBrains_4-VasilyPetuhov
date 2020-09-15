@@ -26,3 +26,5 @@
 
 ## Урок 3. Параллельное программирование. NSOperation
 1. Работа над проектом «Приложение для ВКонтакте».
+2. Добавлена работа с Operations в списке групп: контроллер GroupTableViewController. Описано все в GetGroupsListOperations.swift
+
