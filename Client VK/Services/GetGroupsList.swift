@@ -20,15 +20,7 @@ struct GroupsResponse:  Decodable {
             var name: String
             var logo: String  // уже тут нужно писать желаемые названия
             var id: Int
-            
-            // не нужные в приложении поля, которые есть в json-е
-            //var id: Int
-            //var screen_name: String
-            //var photo_50: String
-            
-            // enum и init нужны если нужно иметь другие названия переменных в отличии от даннных в json
-            // например: logo = "photo_50" (я хочу: logo, а в jsone это: photo_50 )
-            // но все равно нужно указать другие значения, например: name (без уточнения)
+        
             enum CodingKeys: String, CodingKey {
                 case name
                 case logo = "photo_50"
