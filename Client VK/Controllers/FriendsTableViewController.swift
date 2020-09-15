@@ -16,16 +16,16 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+        subscribeToNotificationRealm() // подписка на нотификации реалма + обновление таблицы
+        
+        // запуск обновления данных из сети, запись в Реалм и загрузка из реалма новых данных
+        GetFriendsList().loadData()
         
         // переработка в дженерики, нужно доработать
         //        VKService().loadData(.friends) { () in
         //
         //        }
-        
-        subscribeToNotificationRealm() // подписка на нотификации реалма + обновление таблицы
-        
-        // запуск обновления данных из сети, запись в Реалм и загрузка из реалма новых данных
-        GetFriendsList().loadData()
         
         searchBar.delegate = self
     }

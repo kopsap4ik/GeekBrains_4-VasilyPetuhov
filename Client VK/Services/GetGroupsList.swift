@@ -38,6 +38,7 @@ struct GroupsResponse:  Decodable {
 
 }
 
+// Обычный способ загрузки данных, парсинг и запись в реалм
 class GetGroupsList {
     
     //данные для авторизации в ВК
