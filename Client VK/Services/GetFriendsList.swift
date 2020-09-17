@@ -50,8 +50,7 @@ struct FriendsResponse: Decodable {
 }
 
 class GetFriendsList {
-    
-    //данные для авторизации в ВК
+
     func loadData() {
         
         // Конфигурация по умолчанию

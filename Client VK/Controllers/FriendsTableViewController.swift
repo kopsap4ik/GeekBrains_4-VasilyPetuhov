@@ -9,6 +9,7 @@
 import UIKit
 import Kingfisher
 import RealmSwift
+import PromiseKit
 
 class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
     
@@ -20,11 +21,25 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
         subscribeToNotificationRealm() // подписка на нотификации реалма + обновление таблицы
         
         // запуск обновления данных из сети, запись в Реалм и загрузка из реалма новых данных
-        GetFriendsList().loadData()
+        //GetFriendsList().loadData()
+        
+        GetFriendsListPromise().getData()
+            .get { (friendList) in
+                RealmOperations().saveFriendsToRealm(friendList)
+        }
+             .done { (_) in
+                print("Успешно выполнена загрузка и запись в реалм")
+        }
+            .catch { (error) in
+            print(error)
+        }
+            .finally {
+            print("Все задачи выполнены")
+        }
+        
         
         // переработка в дженерики, нужно доработать
         //        VKService().loadData(.friends) { () in
-        //
         //        }
         
         searchBar.delegate = self

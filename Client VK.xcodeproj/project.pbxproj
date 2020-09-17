@@ -17,6 +17,8 @@
 		D94AD7C325021D6E00902337 /* GetNewsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94AD7C225021D6E00902337 /* GetNewsList.swift */; };
 		D94FC32F2510AB92001FFE76 /* VKService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D943498C24E6AB4300F6E4C5 /* VKService.swift */; };
 		D94FC3312510AC1A001FFE76 /* GetGroupsListOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94FC3302510AC1A001FFE76 /* GetGroupsListOperations.swift */; };
+		D94FC3342510ED96001FFE76 /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = D94FC3332510ED96001FFE76 /* PromiseKit */; };
+		D94FC3362510EDE2001FFE76 /* GetFriendsListPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94FC3352510EDE2001FFE76 /* GetFriendsListPromise.swift */; };
 		D95A8C9024D0515A000F62DB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E13E2924D0452400370B7E /* WebKit.framework */; };
 		D96DF50524557A47005CC3BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DF50424557A47005CC3BA /* AppDelegate.swift */; };
 		D96DF50724557A47005CC3BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DF50624557A47005CC3BA /* SceneDelegate.swift */; };
@@ -59,6 +61,7 @@
 		D943498C24E6AB4300F6E4C5 /* VKService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKService.swift; sourceTree = "<group>"; };
 		D94AD7C225021D6E00902337 /* GetNewsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNewsList.swift; sourceTree = "<group>"; };
 		D94FC3302510AC1A001FFE76 /* GetGroupsListOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGroupsListOperations.swift; sourceTree = "<group>"; };
+		D94FC3352510EDE2001FFE76 /* GetFriendsListPromise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendsListPromise.swift; sourceTree = "<group>"; };
 		D96DF50124557A47005CC3BA /* Client VK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Client VK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D96DF50424557A47005CC3BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D96DF50624557A47005CC3BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D94FC3342510ED96001FFE76 /* PromiseKit in Frameworks */,
 				D9008E1724DBF7B70030A376 /* RealmSwift in Frameworks */,
 				D978C01D24D74DE0004D1075 /* Kingfisher in Frameworks */,
 				D9008E1E24DC25A90030A376 /* SwiftKeychainWrapper in Frameworks */,
@@ -198,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				D978C02024D8059F004D1075 /* GetFriendsList.swift */,
+				D94FC3352510EDE2001FFE76 /* GetFriendsListPromise.swift */,
 				D978C02424D827A4004D1075 /* GetGroupsList.swift */,
 				D94FC3302510AC1A001FFE76 /* GetGroupsListOperations.swift */,
 				D978C02224D807F8004D1075 /* GetPhotosFriend.swift */,
@@ -246,6 +251,7 @@
 				D978C01C24D74DE0004D1075 /* Kingfisher */,
 				D9008E1624DBF7B70030A376 /* RealmSwift */,
 				D9008E1D24DC25A90030A376 /* SwiftKeychainWrapper */,
+				D94FC3332510ED96001FFE76 /* PromiseKit */,
 			);
 			productName = "Client VK";
 			productReference = D96DF50124557A47005CC3BA /* Client VK.app */;
@@ -279,6 +285,7 @@
 				D978C01B24D74DE0004D1075 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				D9008E1524DBF7B70030A376 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				D9008E1C24DC25A90030A376 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				D94FC3322510ED96001FFE76 /* XCRemoteSwiftPackageReference "PromiseKit" */,
 			);
 			productRefGroup = D96DF50224557A47005CC3BA /* Products */;
 			projectDirPath = "";
@@ -321,6 +328,7 @@
 				D9FC1D5B2489392700AC8217 /* CustomNavigationController.swift in Sources */,
 				D941A5772481180500092CC0 /* LoadingAnimationView.swift in Sources */,
 				D9E13E2324CAF99100370B7E /* AuthVKViewController.swift in Sources */,
+				D94FC3362510EDE2001FFE76 /* GetFriendsListPromise.swift in Sources */,
 				D94FC3312510AC1A001FFE76 /* GetGroupsListOperations.swift in Sources */,
 				D9008E1924DC1E680030A376 /* RealmOperations.swift in Sources */,
 				D9F871DF2477D331000E8684 /* AvatarsView.swift in Sources */,
@@ -560,6 +568,14 @@
 				kind = branch;
 			};
 		};
+		D94FC3322510ED96001FFE76 /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/PromiseKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.13.3;
+			};
+		};
 		D978C01B24D74DE0004D1075 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -580,6 +596,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D9008E1C24DC25A90030A376 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
+		};
+		D94FC3332510ED96001FFE76 /* PromiseKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D94FC3322510ED96001FFE76 /* XCRemoteSwiftPackageReference "PromiseKit" */;
+			productName = PromiseKit;
 		};
 		D978C01C24D74DE0004D1075 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
