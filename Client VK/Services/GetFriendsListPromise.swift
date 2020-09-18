@@ -9,17 +9,28 @@
 import Foundation
 import PromiseKit
 
+// Способ загрузки данных, парсинг и запись в реалм с помощью PromiseKit
 class GetFriendsListPromise {
     
-    func getData() -> Promise<[Friend]> {
-        
-        let promise = Promise<[Friend]> { (resolver) in
-            // Конфигурация по умолчанию
+    func getData() {
+        firstly {
+            loadJsonData()
+        }.then { data in
+            self.parseJsonData(data)
+        }.done { friendList in
+            self.saveDataToRealm(friendList)
+        }.catch { error in
+            print(error)
+        }
+//        .finally {
+//            print("Загрузка, парсинг и запись в реалм прошли успешно")
+//        }
+    }
+    
+    func loadJsonData() -> Promise<Data> {
+        return Promise<Data> { (resolver) in
             let configuration = URLSessionConfiguration.default
-            // собственная сессия
             let session =  URLSession(configuration: configuration)
-            
-            // конструктор для URL
             var urlConstructor = URLComponents()
             urlConstructor.scheme = "https"
             urlConstructor.host = "api.vk.com"
@@ -31,45 +42,43 @@ class GetFriendsListPromise {
                 URLQueryItem(name: "v", value: "5.122")
             ]
             
-            // задача для запуска
-            let task = session.dataTask(with: urlConstructor.url!) { (data, _, error) in
+            session.dataTask(with: urlConstructor.url!) { (data, _, error) in
                 //print("Запрос к API: \(urlConstructor.url!)")
-            
-                
-                guard let data = data else {
-                    resolver.reject(error!)
-                    return
+                if let error = error {
+                    return resolver.reject(error)
+                } else {
+                    return resolver.fulfill(data ?? Data())
                 }
-                
-                do {
-                    let arrayFriends = try JSONDecoder().decode(FriendsResponse.self, from: data)
-                    var friendList: [Friend] = []
-                    for i in 0...arrayFriends.response.items.count-1 {
-                        // не отображаем удаленных и заблокированных друзей
-                        if arrayFriends.response.items[i].deactivated == nil {
-                            let name = ((arrayFriends.response.items[i].firstName) + " " + (arrayFriends.response.items[i].lastName))
-                            let avatar = arrayFriends.response.items[i].avatar
-                            let id = String(arrayFriends.response.items[i].id)
-                            friendList.append(Friend.init(userName: name, userAvatar: avatar, ownerID: id))
-                        }
-                    }
-                    
-                    resolver.fulfill(friendList)
-                    
-//                    DispatchQueue.main.async {
-//                        RealmOperations().saveFriendsToRealm(friendList)
-//                    }
-                    
-                } catch let error {
-                    resolver.reject(error)
-                }
-            }
-            task.resume()
+            }.resume()
         }
-    return promise
-        
     }
     
-
+    
+    func parseJsonData(_ data: Data) -> Promise<[Friend]> {
+        return Promise<[Friend]> { (resolver) in
+            do {
+                let arrayFriends = try JSONDecoder().decode(FriendsResponse.self, from: data)
+                var friendList: [Friend] = []
+                for i in 0...arrayFriends.response.items.count-1 {
+                    // не отображаем удаленных и заблокированных друзей
+                    if arrayFriends.response.items[i].deactivated == nil {
+                        let name = ((arrayFriends.response.items[i].firstName) + " " + (arrayFriends.response.items[i].lastName))
+                        let avatar = arrayFriends.response.items[i].avatar
+                        let id = String(arrayFriends.response.items[i].id)
+                        friendList.append(Friend.init(userName: name, userAvatar: avatar, ownerID: id))
+                    }
+                }
+                resolver.fulfill(friendList)
+            } catch let error {
+                resolver.reject(error)
+            }
+        }
+    }
+    
+    func saveDataToRealm(_ friendList: [Friend]) {
+        //DispatchQueue.main.async {
+            RealmOperations().saveFriendsToRealm(friendList)
+        //}
+    }
     
 }

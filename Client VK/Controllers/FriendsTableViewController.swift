@@ -24,19 +24,6 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
         //GetFriendsList().loadData()
         
         GetFriendsListPromise().getData()
-            .get { (friendList) in
-                RealmOperations().saveFriendsToRealm(friendList)
-        }
-             .done { (_) in
-                print("Успешно выполнена загрузка и запись в реалм")
-        }
-            .catch { (error) in
-            print(error)
-        }
-            .finally {
-            print("Все задачи выполнены")
-        }
-        
         
         // переработка в дженерики, нужно доработать
         //        VKService().loadData(.friends) { () in
