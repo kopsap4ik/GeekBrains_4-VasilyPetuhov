@@ -36,6 +36,8 @@ class GroupTableViewController: UITableViewController {
     
     var myGroups: [Group] = []
     
+    lazy var imageCache = ImageCache(container: self.tableView) //для кэша картинок
+    
 
     // MARK: - TableView
 
@@ -48,13 +50,17 @@ class GroupTableViewController: UITableViewController {
         
         cell.nameGroupLabel.text = myGroups[indexPath.row].groupName
         
-        if let imgUrl = URL(string: myGroups[indexPath.row].groupLogo) {
-            let avatar = ImageResource(downloadURL: imgUrl) //работает через Kingfisher
-            cell.avatarGroupView.avatarImage.kf.indicatorType = .activity //работает через Kingfisher
-            cell.avatarGroupView.avatarImage.kf.setImage(with: avatar) //работает через Kingfisher
-            
-            //cell.avatarGroupView.avatarImage.load(url: imgUrl) // работает через extension UIImageView
-        }
+//        if let imgUrl = URL(string: myGroups[indexPath.row].groupLogo) {
+//            let avatar = ImageResource(downloadURL: imgUrl) //работает через Kingfisher
+//            cell.avatarGroupView.avatarImage.kf.indicatorType = .activity //работает через Kingfisher
+//            cell.avatarGroupView.avatarImage.kf.setImage(with: avatar) //работает через Kingfisher
+//
+//            //cell.avatarGroupView.avatarImage.load(url: imgUrl) // работает через extension UIImageView
+//        }
+        
+        // аватар работает через кэш в ImageCache
+        let imgUrl = myGroups[indexPath.row].groupLogo
+        cell.avatarGroupView.avatarImage.image = imageCache.getPhoto(at: indexPath, url: imgUrl)
         
         return cell
     }

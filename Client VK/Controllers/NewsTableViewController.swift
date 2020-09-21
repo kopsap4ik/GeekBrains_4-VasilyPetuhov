@@ -20,7 +20,8 @@ class NewsTableViewController: UITableViewController {
             }
         }
     }
-  
+    
+    lazy var imageCache = ImageCache(container: self.tableView)
     var postNewsList: [PostNews] = []
 
     // MARK: - Table view data source
@@ -41,9 +42,12 @@ class NewsTableViewController: UITableViewController {
         
         let  cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! NewsTableViewCell
         
-        // аватар
-        guard let avatarUrl = URL(string: postNewsList[indexPath.row].avatar ) else { return cell }
-        cell.avatarUserNews.avatarImage.load(url: avatarUrl) // работает через extension UIImageView
+        // аватар работает через extension UIImageView
+        //guard let avatarUrl = URL(string: postNewsList[indexPath.row].avatar ) else { return cell }
+        //cell.avatarUserNews.avatarImage.load(url: avatarUrl)
+        
+        // аватар работает через кэш в ImageCache
+        cell.avatarUserNews.avatarImage.image = imageCache.getPhoto(at: indexPath, url: postNewsList[indexPath.row].avatar)
         
         // имя автора
         cell.nameUserNews.text = postNewsList[indexPath.row].name

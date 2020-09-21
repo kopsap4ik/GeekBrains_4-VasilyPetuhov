@@ -20,9 +20,10 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
                 
         subscribeToNotificationRealm() // подписка на нотификации реалма + обновление таблицы
         
-        // запуск обновления данных из сети, запись в Реалм и загрузка из реалма новых данных
+        // Обычный запуск обновления данных из сети, запись в Реалм и загрузка из реалма новых данных
         //GetFriendsList().loadData()
         
+        // PromiseKit - обновления данных из сети, запись в Реалм
         GetFriendsListPromise().getData()
         
         // переработка в дженерики, нужно доработать
@@ -104,10 +105,12 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
         let avatar = ImageResource(downloadURL: imgUrl) //работает через Kingfisher
         cell.avatarFriendView.avatarImage.kf.indicatorType = .activity
         cell.avatarFriendView.avatarImage.kf.setImage(with: avatar)
-        //        cell.avatarFriendView.avatarImage.load(url: imgUrl) // работает через extension UIImageView
+        
+        // работает через extension UIImageView
+        //        cell.avatarFriendView.avatarImage.load(url: imgUrl)
         
         
-        
+        // старая реализация
         // задать имя пользователя (ищет по буквам для расстановки по секциям) + сортировка по алфавиту
         //        cell.nameFriendLabel.text = getNameFriendForCell(indexPath)
         //print(indexPath)
