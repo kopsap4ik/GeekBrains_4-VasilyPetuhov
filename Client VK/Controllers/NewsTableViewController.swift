@@ -10,19 +10,31 @@ import UIKit
 
 class NewsTableViewController: UITableViewController {
     
+    lazy var getNewsListSwiftyJSON = GetNewsListSwiftyJSON()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GetNewsList().loadData { [weak self] (complition) in
+        // Decodable - GetNewsList
+//        GetNewsList().loadData { [weak self] (complition) in
+//            DispatchQueue.main.async {
+//                self?.postNewsList = complition
+//                self?.tableView.reloadData()
+//            }
+//        }
+        
+        // SwiftyJSON - GetNewsListSwiftyJSON
+        getNewsListSwiftyJSON.get { [weak self] (complition) in
             DispatchQueue.main.async {
                 self?.postNewsList = complition
                 self?.tableView.reloadData()
             }
         }
+        
     }
     
     lazy var imageCache = ImageCache(container: self.tableView)
-    var postNewsList: [PostNews] = []
+    var postNewsList: [News] = []
 
     // MARK: - Table view data source
     
@@ -77,9 +89,9 @@ class NewsTableViewController: UITableViewController {
         
         //картинка к новости
         guard let imgUrl = URL(string: postNewsList[indexPath.row].imageNews ) else { return cell }
+        cell.imgNews.image = UIImage(systemName: "icloud.and.arrow.down") // обнулить картинку
         cell.imgNews.load(url: imgUrl) // работает через extension UIImageView
         cell.imgNews.contentMode = .scaleAspectFill
-
 
         return cell
     }

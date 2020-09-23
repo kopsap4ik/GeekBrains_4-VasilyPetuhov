@@ -10,8 +10,12 @@ import UIKit
 
 class LoginFormController: UIViewController, UITextFieldDelegate {
     
-    let session = Session.instance //синглтон для хранения данных о текущей сессии
+    // MARK: - Outlets
+    @IBOutlet weak var scrollViewLogin: UIScrollView!
+    @IBOutlet weak var loginTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     
+    let session = Session.instance //синглтон для хранения данных о текущей сессии
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +34,11 @@ class LoginFormController: UIViewController, UITextFieldDelegate {
         // работает, но при смене IP ломается авторизация
         // проверка истек ли срок действия ключа доступа к ВК
 //        if session.expiredDate != nil, session.expiredDate > Date()  {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { //задержка, чтобы отработал переход
-//                self.performSegue(withIdentifier: "login", sender: nil)
-//            }
-//        }
+        if session.expiredDate > Date()  {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { //задержка, чтобы отработал переход
+                self.performSegue(withIdentifier: "login", sender: nil)
+            }
+        }
         
     }
     
@@ -55,11 +60,6 @@ class LoginFormController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    
-    // MARK: - Outlets
-    @IBOutlet weak var scrollViewLogin: UIScrollView!
-    @IBOutlet weak var loginTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
     
     // MARK: - Functions
     // Когда клавиатура появляется

@@ -139,7 +139,7 @@ struct NewsResponse: Decodable {
 class GetNewsList {
     
     //данные для авторизации в ВК
-    func loadData(complition: @escaping ([PostNews]) -> Void ) {
+    func loadData(complition: @escaping ([News]) -> Void ) {
         
         // Конфигурация по умолчанию
         let configuration = URLSessionConfiguration.default
@@ -155,7 +155,7 @@ class GetNewsList {
             URLQueryItem(name: "owner_id", value: String(Session.instance.userId)),
             URLQueryItem(name: "access_token", value: Session.instance.token),
             URLQueryItem(name: "filters", value: "post,photo"),
-            //URLQueryItem(name: "count", value: "10"),
+            URLQueryItem(name: "count", value: "1"),
             URLQueryItem(name: "v", value: "5.122")
         ]
         
@@ -177,7 +177,7 @@ class GetNewsList {
                 var text: String
                 var urlImg: String = ""
                 
-                var newsList: [PostNews] = []
+                var newsList: [News] = []
                 
                 for i in 0...arrayNews.response.items.count-1 {
                     let typeNews = arrayNews.response.items[i].attachments?.first?.type
@@ -205,7 +205,7 @@ class GetNewsList {
                     
                     // имена и аватарки групп
                     // много вложенных циклов!
-                    let sourceID = arrayNews.response.items[i].sourceID * -1
+                    let sourceID = arrayNews.response.items[i].sourceID * -1 // можно использовать abs()
                     for i in 0...arrayNews.response.groups.count-1 {
                         if arrayNews.response.groups[i].id == sourceID {
                             name = arrayNews.response.groups[i].name
@@ -213,7 +213,7 @@ class GetNewsList {
                         }
                     }
                     
-                    newsList.append(PostNews(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, likes: likes, comments: comments, reposts: reposts, views: views))
+                    newsList.append(News(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, likes: likes, comments: comments, reposts: reposts, views: views))
                 }
                 return complition(newsList)
                 
