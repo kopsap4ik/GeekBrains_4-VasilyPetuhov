@@ -80,6 +80,9 @@ class NewGroupTableViewController: UITableViewController, UISearchResultsUpdatin
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // для избавления смешивания цветов для разных слоёв (имя группы имеет белый фон в строриборде), меняем его при нажатии
+        let cell = tableView.cellForRow(at: indexPath) as! NewGroupTableViewCell
+        cell.nameNewGroupLabel.backgroundColor = cell.backgroundColor
         // кратковременное подсвечивание при нажатии на ячейку
         tableView.deselectRow(at: indexPath, animated: true)
     }

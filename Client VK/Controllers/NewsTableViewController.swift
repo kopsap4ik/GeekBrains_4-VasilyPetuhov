@@ -10,29 +10,23 @@ import UIKit
 
 class NewsTableViewController: UITableViewController {
     
-    lazy var getNewsListSwiftyJSON = GetNewsListSwiftyJSON()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Decodable - GetNewsList
 //        GetNewsList().loadData { [weak self] (complition) in
-//            DispatchQueue.main.async {
 //                self?.postNewsList = complition
 //                self?.tableView.reloadData()
-//            }
 //        }
         
         // SwiftyJSON - GetNewsListSwiftyJSON
         getNewsListSwiftyJSON.get { [weak self] (complition) in
-            DispatchQueue.main.async {
                 self?.postNewsList = complition
                 self?.tableView.reloadData()
-            }
         }
-        
     }
     
+    lazy var getNewsListSwiftyJSON = GetNewsListSwiftyJSON()
     lazy var imageCache = ImageCache(container: self.tableView)
     var postNewsList: [News] = []
 

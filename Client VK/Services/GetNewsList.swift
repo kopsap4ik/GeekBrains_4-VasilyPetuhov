@@ -155,7 +155,7 @@ class GetNewsList {
             URLQueryItem(name: "owner_id", value: String(Session.instance.userId)),
             URLQueryItem(name: "access_token", value: Session.instance.token),
             URLQueryItem(name: "filters", value: "post,photo"),
-            URLQueryItem(name: "count", value: "1"),
+            //URLQueryItem(name: "count", value: "1"),
             URLQueryItem(name: "v", value: "5.122")
         ]
         
@@ -215,11 +215,16 @@ class GetNewsList {
                     
                     newsList.append(News(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, likes: likes, comments: comments, reposts: reposts, views: views))
                 }
-                return complition(newsList)
+                DispatchQueue.main.async {
+                    complition(newsList)
+                }
+                //return
                 
             } catch let error {
                 print(error)
-                complition([])
+                DispatchQueue.main.async {
+                    complition([])
+                }
             }
         }
         task.resume()

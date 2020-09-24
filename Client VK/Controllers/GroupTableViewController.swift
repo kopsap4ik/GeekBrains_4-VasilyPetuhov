@@ -86,6 +86,9 @@ class GroupTableViewController: UITableViewController {
     
     // кратковременное подсвечивание при нажатии на ячейку
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // для избавления смешивания цветов для разных слоёв (имя группы имеет белый фон в строриборде), меняем его при нажатии
+        let cell = tableView.cellForRow(at: indexPath) as! GroupTableViewCell
+        cell.nameGroupLabel.backgroundColor = cell.backgroundColor
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

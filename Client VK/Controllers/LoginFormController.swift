@@ -33,12 +33,12 @@ class LoginFormController: UIViewController, UITextFieldDelegate {
         
         // работает, но при смене IP ломается авторизация
         // проверка истек ли срок действия ключа доступа к ВК
-//        if session.expiredDate != nil, session.expiredDate > Date()  {
-        if session.expiredDate > Date()  {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { //задержка, чтобы отработал переход
-                self.performSegue(withIdentifier: "login", sender: nil)
-            }
-        }
+        // подобная проверка есть в уроке 5 (где проверяется срок кэша файла)
+//        if session.expiredDate > Date()  {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { //задержка, чтобы отработал переход
+//                self.performSegue(withIdentifier: "login", sender: nil)
+//            }
+//        }
         
     }
     
