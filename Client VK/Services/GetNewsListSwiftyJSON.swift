@@ -118,7 +118,7 @@ struct NewsResponseGroupSwifty {
 final class GetNewsListSwiftyJSON {
     
     func get (comlition: @escaping ([News]) -> Void){
-        
+
         DispatchQueue.global(qos: .userInitiated).async {
             
             // Конфигурация по умолчанию
@@ -162,7 +162,6 @@ final class GetNewsListSwiftyJSON {
     }
     
     func parse(_ data: Data?) -> [News] {
-        
         guard let data = data else { return [] }
         
         do {
@@ -194,7 +193,7 @@ final class GetNewsListSwiftyJSON {
                       _ groups: [NewsResponseGroupSwifty]) -> [News] {
         
         var newsList: [News] = []
-        DispatchQueue.global().sync {
+
             for item in items {
                 
                 var newItem = News(name: "", avatar: "", date: "", textNews: item.text, imageNews: item.imgUrl, likes: item.likes, comments: item.comments, reposts: item.reposts, views: item.views)
@@ -216,9 +215,7 @@ final class GetNewsListSwiftyJSON {
                 }
                 newsList.append(newItem)
             }
-        }
         return newsList
-        
     }
     
     let dateFormatter: DateFormatter = {
@@ -232,6 +229,5 @@ final class GetNewsListSwiftyJSON {
         let stringDate = dateFormatter.string(from: date)
         return stringDate
     }
-    
     
 }

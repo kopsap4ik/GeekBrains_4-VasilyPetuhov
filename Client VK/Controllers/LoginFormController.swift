@@ -35,8 +35,9 @@ class LoginFormController: UIViewController, UITextFieldDelegate {
         // проверка истек ли срок действия ключа доступа к ВК
         // подобная проверка есть в уроке 5 (где проверяется срок кэша файла)
 //        if session.expiredDate > Date()  {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { //задержка, чтобы отработал переход
-//                self.performSegue(withIdentifier: "login", sender: nil)
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in //задержка, чтобы отработал переход
+//                guard let strongSelf = self else { return }
+//                strongSelf.performSegue(withIdentifier: "login", sender: nil)
 //            }
 //        }
         
