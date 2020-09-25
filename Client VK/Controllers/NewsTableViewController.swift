@@ -13,6 +13,8 @@ class NewsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addRefreshControl()
+        
         // Decodable - GetNewsList
 //        GetNewsList().loadData { [weak self] (complition) in
 //                self?.postNewsList = complition
@@ -24,12 +26,47 @@ class NewsTableViewController: UITableViewController {
                 self?.postNewsList = complition
                 self?.tableView.reloadData()
         }
+        
     }
     
     lazy var getNewsListSwiftyJSON = GetNewsListSwiftyJSON()
     lazy var imageCache = ImageCache(container: self.tableView)
     var postNewsList: [News] = []
 
+    // MARK:  - Свайп вниз для обновления новостей
+    
+    private func addRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl?.attributedTitle = NSAttributedString(string: "Новости загружаются...")
+        refreshControl?.tintColor = .blue
+        refreshControl?.addTarget(self, action: #selector(refreshNewsList), for: .valueChanged)
+        //tableView.addSubview(refreshControl!)
+    }
+
+    
+    @objc private func refreshNewsList() {
+        
+        let dateFormatter: DateFormatter = {
+            let df = DateFormatter()
+            df.dateFormat = "dd.MM.yyyy HH.mm"
+            return df
+        }()
+        
+        if let dateFrom = postNewsList.first?.date {
+            let timestamp = dateFormatter.date(from: dateFrom)?.timeIntervalSince1970 ?? Date().timeIntervalSince1970
+            
+            // SwiftyJSON - GetNewsListSwiftyJSON + время с которого нужно загрузить данные
+            getNewsListSwiftyJSON.get(from: timestamp + 10) { [weak self] (complition) in
+                guard let strongSelf = self else { return }
+                print(complition)
+                strongSelf.postNewsList = complition + strongSelf.postNewsList
+                strongSelf.tableView.reloadData()
+            }
+        }
+        
+        self.refreshControl?.endRefreshing() //останавливаем контрол
+    }
+    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

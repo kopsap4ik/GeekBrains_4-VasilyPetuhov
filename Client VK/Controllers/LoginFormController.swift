@@ -31,15 +31,15 @@ class LoginFormController: UIViewController, UITextFieldDelegate {
         self.loginTextField.delegate = self
         self.passwordTextField.delegate = self    
         
-        // работает, но при смене IP ломается авторизация
+        // работает, но при смене IP ломается авторизация (не дает делать запросы)
         // проверка истек ли срок действия ключа доступа к ВК
         // подобная проверка есть в уроке 5 (где проверяется срок кэша файла)
-//        if session.expiredDate > Date()  {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in //задержка, чтобы отработал переход
-//                guard let strongSelf = self else { return }
-//                strongSelf.performSegue(withIdentifier: "login", sender: nil)
-//            }
-//        }
+        if session.expiredDate > Date()  {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in //задержка, чтобы отработал переход
+                guard let strongSelf = self else { return }
+                strongSelf.performSegue(withIdentifier: "login", sender: nil)
+            }
+        }
         
     }
     

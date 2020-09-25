@@ -57,6 +57,15 @@ struct NewsResponseItemSwifty {
             }
         }
         
+        // тип фото 2 (другой вариант json)
+        if json["photos"]["items"].array != nil {
+            for size in json["photos"]["items"][0]["sizes"].arrayValue {
+                if size["type"] == "x" {
+                    self.imgUrl = size["url"].stringValue
+                }
+            }
+        }
+        
         // тип видео
         if json["attachments"][0]["type"] == "video" {
             for image in json["attachments"][0]["video"]["image"].arrayValue {
@@ -117,7 +126,8 @@ struct NewsResponseGroupSwifty {
 
 final class GetNewsListSwiftyJSON {
     
-    func get (comlition: @escaping ([News]) -> Void){
+    func get (from timestamp: TimeInterval? = nil,
+              comlition: @escaping ([News]) -> Void){
 
         DispatchQueue.global(qos: .userInitiated).async {
             
@@ -138,6 +148,10 @@ final class GetNewsListSwiftyJSON {
                 //URLQueryItem(name: "count", value: "10"),
                 URLQueryItem(name: "v", value: "5.122")
             ]
+            
+            if let timestamp = timestamp {
+                urlConstructor.queryItems?.append(URLQueryItem(name: "start_time", value: String(timestamp)))
+            }
             
             // задача для запуска
             let task = session.dataTask(with: urlConstructor.url!) { [weak self] (data, _, error) in
