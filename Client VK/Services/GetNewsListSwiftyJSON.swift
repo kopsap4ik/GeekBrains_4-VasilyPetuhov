@@ -9,6 +9,128 @@
 import Foundation
 import SwiftyJSON
 
+final class GetNewsListSwiftyJSON {
+    
+    func get (newsFrom timestamp: TimeInterval? = nil,
+              nextPageNews nextNewsID: String = "",
+              comlition: @escaping ([News], String) -> Void){
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            
+            // Конфигурация по умолчанию
+            let configuration = URLSessionConfiguration.default
+            // собственная сессия
+            let session =  URLSession(configuration: configuration)
+            
+            // конструктор для URL
+            var urlConstructor = URLComponents()
+            urlConstructor.scheme = "https"
+            urlConstructor.host = "api.vk.com"
+            urlConstructor.path = "/method/newsfeed.get"
+            urlConstructor.queryItems = [
+                URLQueryItem(name: "owner_id", value: String(Session.instance.userId)),
+                URLQueryItem(name: "access_token", value: Session.instance.token),
+                URLQueryItem(name: "filters", value: "post,photo"),
+                URLQueryItem(name: "start_from", value: nextNewsID),
+                URLQueryItem(name: "count", value: "10"),
+                URLQueryItem(name: "v", value: "5.124")
+            ]
+            
+            if let timestamp = timestamp {
+                urlConstructor.queryItems?.append(URLQueryItem(name: "start_time", value: String(timestamp)))
+            }
+            
+            // задача для запуска запроса
+            let task = session.dataTask(with: urlConstructor.url!) { [weak self] (data, _, error) in
+                //print("Запрос к API: \(urlConstructor.url!)")
+                
+                if let error = error {
+                    print("Error in GetNewsListSwiftyJSON: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        comlition([], "")
+                    }
+                    return
+                }
+                
+                // запуск парсинга
+                var newsItems: [News] = []
+                var nextFrom = ""
+                if let data = data, let json = try? JSON(data: data) {
+                    newsItems = self?.parse(json) ?? []
+                    nextFrom = json["response"]["next_from"].stringValue
+                }
+                
+                DispatchQueue.main.async {
+                    comlition(newsItems, nextFrom)
+                }
+                
+            }
+            task.resume()
+        }
+    }
+    
+    func parse(_ json: JSON) -> [News] {
+            let items = json["response"]["items"]
+                .arrayValue
+                .map { NewsResponseItemSwifty(json: $0) }
+            
+            let profiles = json["response"]["profiles"]
+                .arrayValue
+                .map { NewsResponseProfileSwifty(json: $0) }
+            
+            let groups = json["response"]["groups"]
+                .arrayValue
+                .map { NewsResponseGroupSwifty(json: $0) }
+            
+            return makeNewsList(items, profiles, groups)
+    }
+    
+    func makeNewsList(_ items: [NewsResponseItemSwifty],
+                      _ profiles: [NewsResponseProfileSwifty],
+                      _ groups: [NewsResponseGroupSwifty]) -> [News] {
+        
+        var newsList: [News] = []
+
+            for item in items {
+                
+                var newItem = News(name: "", avatar: "", date: "", textNews: item.text, imageNews: item.imgUrl, likes: item.likes, comments: item.comments, reposts: item.reposts, views: item.views)
+                
+                newItem.date = self.getDateText(timestamp: item.date)
+                
+                if item.sourceID > 0 {
+                    let profile = profiles
+                        .filter({ item.sourceID == $0.id })
+                        .first
+                    newItem.name = profile?.name ?? ""
+                    newItem.avatar = profile?.imageUrl ?? ""
+                } else {
+                    let group = groups
+                        .filter({ abs(item.sourceID) == $0.id })
+                        .first
+                    newItem.name = group?.name ?? ""
+                    newItem.avatar = group?.imageUrl ?? ""
+                }
+                newsList.append(newItem)
+            }
+        return newsList
+    }
+    
+    let dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "dd.MM.yyyy HH:mm:ss"
+        return df
+    }()
+    
+    func getDateText(timestamp: Double) -> String {
+        let date = Date(timeIntervalSince1970: timestamp)
+        let stringDate = dateFormatter.string(from: date)
+        return stringDate
+    }
+    
+}
+
+// MARK:  - структуры для парсинга swiftyJSON
+
 struct NewsResponseItemSwifty {
     var sourceID: Int
     var authorName: String? // заполняются отдельно (не в парсинге)
@@ -77,7 +199,7 @@ struct NewsResponseItemSwifty {
         
         // тип видео в истории (репост)
         if json["copy_history"][0]["attachments"][0]["type"] == "video" {
-            self.text = "Репост записи: " + json["copy_history"][0]["text"].stringValue
+            //self.text = "Репост записи: " + json["copy_history"][0]["text"].stringValue
             for image in json["copy_history"][0]["attachments"][0]["video"]["image"].arrayValue {
                 if image["width"] == 800 {
                     self.imgUrl = image["url"].stringValue
@@ -87,7 +209,7 @@ struct NewsResponseItemSwifty {
         
         // тип фото (репост)
         if json["copy_history"][0]["attachments"][0]["type"] == "photo" {
-            self.text = "Репост записи: " + json["copy_history"][0]["text"].stringValue
+            //self.text = "Репост записи: " + json["copy_history"][0]["text"].stringValue
             for size in json["copy_history"][0]["attachments"][0]["photo"]["sizes"].arrayValue {
                 if size["type"] == "x" {
                     self.imgUrl = size["url"].stringValue
@@ -121,127 +243,4 @@ struct NewsResponseGroupSwifty {
         self.name = json["name"].stringValue
         self.imageUrl = json["photo_50"].stringValue
     }
-}
-
-
-final class GetNewsListSwiftyJSON {
-    
-    func get (from timestamp: TimeInterval? = nil,
-              comlition: @escaping ([News]) -> Void){
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            
-            // Конфигурация по умолчанию
-            let configuration = URLSessionConfiguration.default
-            // собственная сессия
-            let session =  URLSession(configuration: configuration)
-            
-            // конструктор для URL
-            var urlConstructor = URLComponents()
-            urlConstructor.scheme = "https"
-            urlConstructor.host = "api.vk.com"
-            urlConstructor.path = "/method/newsfeed.get"
-            urlConstructor.queryItems = [
-                URLQueryItem(name: "owner_id", value: String(Session.instance.userId)),
-                URLQueryItem(name: "access_token", value: Session.instance.token),
-                URLQueryItem(name: "filters", value: "post,photo"),
-                //URLQueryItem(name: "count", value: "10"),
-                URLQueryItem(name: "v", value: "5.122")
-            ]
-            
-            if let timestamp = timestamp {
-                urlConstructor.queryItems?.append(URLQueryItem(name: "start_time", value: String(timestamp)))
-            }
-            
-            // задача для запуска
-            let task = session.dataTask(with: urlConstructor.url!) { [weak self] (data, _, error) in
-                //print("Запрос к API: \(urlConstructor.url!)")
-                
-                if let error = error {
-                    print("Error in GetNewsListSwiftyJSON: \(error.localizedDescription)")
-                    DispatchQueue.main.async {
-                        comlition([])
-                    }
-                    return
-                }
-                
-                let newsItems = self?.parse(data) ?? []
-                DispatchQueue.main.async {
-                    comlition(newsItems)
-                }
-                
-            }
-            task.resume()
-        }
-    }
-    
-    func parse(_ data: Data?) -> [News] {
-        guard let data = data else { return [] }
-        
-        do {
-            
-            let json = try JSON(data: data)
-            
-            let items = json["response"]["items"]
-                .arrayValue
-                .map { NewsResponseItemSwifty(json: $0) }
-            
-            let profiles = json["response"]["profiles"]
-                .arrayValue
-                .map { NewsResponseProfileSwifty(json: $0) }
-            
-            let groups = json["response"]["groups"]
-                .arrayValue
-                .map { NewsResponseGroupSwifty(json: $0) }
-            
-            return makeNewsList(items, profiles, groups)
-            
-        } catch {
-            print(error)
-            return []
-        }
-    }
-    
-    func makeNewsList(_ items: [NewsResponseItemSwifty],
-                      _ profiles: [NewsResponseProfileSwifty],
-                      _ groups: [NewsResponseGroupSwifty]) -> [News] {
-        
-        var newsList: [News] = []
-
-            for item in items {
-                
-                var newItem = News(name: "", avatar: "", date: "", textNews: item.text, imageNews: item.imgUrl, likes: item.likes, comments: item.comments, reposts: item.reposts, views: item.views)
-                
-                newItem.date = self.getDateText(timestamp: item.date)
-                
-                if item.sourceID > 0 {
-                    let profile = profiles
-                        .filter({ item.sourceID == $0.id })
-                        .first
-                    newItem.name = profile?.name ?? ""
-                    newItem.avatar = profile?.imageUrl ?? ""
-                } else {
-                    let group = groups
-                        .filter({ abs(item.sourceID) == $0.id })
-                        .first
-                    newItem.name = group?.name ?? ""
-                    newItem.avatar = group?.imageUrl ?? ""
-                }
-                newsList.append(newItem)
-            }
-        return newsList
-    }
-    
-    let dateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.dateFormat = "dd.MM.yyyy HH.mm"
-        return df
-    }()
-    
-    func getDateText(timestamp: Double) -> String {
-        let date = Date(timeIntervalSince1970: timestamp)
-        let stringDate = dateFormatter.string(from: date)
-        return stringDate
-    }
-    
 }
