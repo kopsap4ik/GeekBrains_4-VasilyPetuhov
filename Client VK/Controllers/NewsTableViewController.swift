@@ -12,9 +12,9 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addRefreshControl()
+        addRefreshControl() // подгрузка новых новостей свайпом вниз
         tableView.prefetchDataSource = self // для подгрузки новостей снизу
-        loadNews()
+        loadNews() // загрузка новостей из сети/парсинг
     }
     
     lazy var getNewsListSwiftyJSON = GetNewsListSwiftyJSON()

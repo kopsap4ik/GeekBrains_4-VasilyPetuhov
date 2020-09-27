@@ -15,7 +15,7 @@ final class GetNewsListSwiftyJSON {
               nextPageNews nextNewsID: String = "",
               comlition: @escaping ([News], String) -> Void){
 
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global().async {
             
             // Конфигурация по умолчанию
             let configuration = URLSessionConfiguration.default
@@ -122,8 +122,13 @@ final class GetNewsListSwiftyJSON {
     }()
     
     func getDateText(timestamp: Double) -> String {
-        let date = Date(timeIntervalSince1970: timestamp)
-        let stringDate = dateFormatter.string(from: date)
+        
+        var stringDate = ""
+        DispatchQueue.global().async {
+            let date = Date(timeIntervalSince1970: timestamp)
+            stringDate = self.dateFormatter.string(from: date)
+        }
+        
         return stringDate
     }
     
