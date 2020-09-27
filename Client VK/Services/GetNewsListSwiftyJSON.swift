@@ -122,14 +122,19 @@ final class GetNewsListSwiftyJSON {
     }()
     
     func getDateText(timestamp: Double) -> String {
-        
-        var stringDate = ""
-        DispatchQueue.global().async {
-            let date = Date(timeIntervalSince1970: timestamp)
-            stringDate = self.dateFormatter.string(from: date)
-        }
-        
+    
+        let date = Date(timeIntervalSince1970: timestamp)
+        let stringDate = dateFormatter.string(from: date)
         return stringDate
+        
+//        var stringDate = ""
+//        DispatchQueue.global().async {
+//            let date = Date(timeIntervalSince1970: timestamp)
+//            stringDate = self.dateFormatter.string(from: date)
+//        }
+//        
+//        return stringDate
+        
     }
     
 }
