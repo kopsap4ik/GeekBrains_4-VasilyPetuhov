@@ -213,7 +213,7 @@ class GetNewsList {
                         }
                     }
                     
-                    newsList.append(News(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, likes: likes, comments: comments, reposts: reposts, views: views))
+                    newsList.append(News(name: name, avatar: avatar, date: strDate, textNews: text, imageNews: urlImg, aspectRatio: 1, likes: likes, comments: comments, reposts: reposts, views: views))
                 }
                 DispatchQueue.main.async {
                     complition(newsList)

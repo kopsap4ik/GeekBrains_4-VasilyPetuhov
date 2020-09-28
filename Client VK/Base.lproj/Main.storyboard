@@ -181,7 +181,6 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Имя друга" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rmu-1f-TSi">
                                             <rect key="frame" x="70" y="19.5" width="324" height="21"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -245,7 +244,6 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Имя группы" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBa-Iy-xXt">
                                             <rect key="frame" x="70" y="19.5" width="95.5" height="21"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -309,6 +307,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="638.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icloud.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yEw-l7-P7d">
+                                            <rect key="frame" x="3" y="180.5" width="408" height="409"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="yEw-l7-P7d" secondAttribute="height" multiplier="1:1" id="xx0-hp-gaG"/>
+                                            </constraints>
+                                        </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rX0-F7-1Tr" customClass="AvatarsView" customModule="Client_VK" customModuleProvider="target">
                                             <rect key="frame" x="10" y="10" width="50" height="50"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -342,12 +346,6 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icloud.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yEw-l7-P7d">
-                                            <rect key="frame" x="3" y="180.5" width="408" height="409"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="yEw-l7-P7d" secondAttribute="height" multiplier="1:1" id="xx0-hp-gaG"/>
-                                            </constraints>
-                                        </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eyx-9M-9Bd">
                                             <rect key="frame" x="0.0" y="598.5" width="414" height="30"/>
                                             <subviews>
@@ -454,6 +452,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="538.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icloud.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fqN-PN-lnl">
+                                            <rect key="frame" x="3" y="80.5" width="408" height="409"/>
+                                            <color key="backgroundColor" systemColor="labelColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="fqN-PN-lnl" secondAttribute="height" multiplier="1:1" id="KZS-lo-4fY"/>
+                                            </constraints>
+                                        </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Suv-gF-GCr" customClass="AvatarsView" customModule="Client_VK" customModuleProvider="target">
                                             <rect key="frame" x="10" y="10" width="50" height="50"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -476,18 +481,13 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEX-pW-u0N">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEX-pW-u0N">
                                             <rect key="frame" x="3" y="70" width="408" height="0.5"/>
+                                            <color key="backgroundColor" systemColor="linkColor"/>
                                             <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icloud.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fqN-PN-lnl">
-                                            <rect key="frame" x="3" y="80.5" width="408" height="409"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="fqN-PN-lnl" secondAttribute="height" multiplier="1:1" id="KZS-lo-4fY"/>
-                                            </constraints>
-                                        </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8pe-fU-98M">
                                             <rect key="frame" x="0.0" y="498.5" width="414" height="30"/>
                                             <subviews>
@@ -615,7 +615,6 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Имя новой группы" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Vi-Nr-Cfs">
                                             <rect key="frame" x="70" y="19.5" width="324" height="21"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>

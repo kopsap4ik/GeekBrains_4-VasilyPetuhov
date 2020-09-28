@@ -6,7 +6,7 @@
 //  Copyright © 2020 Vasily Petuhov. All rights reserved.
 //
 
-import Foundation
+import UIKit // нужен для aspectRatio
 import SwiftyJSON
 
 final class GetNewsListSwiftyJSON {
@@ -30,7 +30,8 @@ final class GetNewsListSwiftyJSON {
             urlConstructor.queryItems = [
                 URLQueryItem(name: "owner_id", value: String(Session.instance.userId)),
                 URLQueryItem(name: "access_token", value: Session.instance.token),
-                URLQueryItem(name: "filters", value: "post,photo"),
+                //URLQueryItem(name: "filters", value: "post,photo"),
+                URLQueryItem(name: "filters", value: "photo"),
                 URLQueryItem(name: "start_from", value: nextNewsID),
                 URLQueryItem(name: "count", value: "10"),
                 URLQueryItem(name: "v", value: "5.124")
@@ -63,7 +64,6 @@ final class GetNewsListSwiftyJSON {
                 DispatchQueue.main.async {
                     completion(newsItems, nextFrom)
                 }
-                
             }
             task.resume()
         }
@@ -93,7 +93,7 @@ final class GetNewsListSwiftyJSON {
 
             for item in items {
                 
-                var newItem = News(name: "", avatar: "", date: "", textNews: item.text, imageNews: item.imgUrl, likes: item.likes, comments: item.comments, reposts: item.reposts, views: item.views)
+                var newItem = News(name: "", avatar: "", date: "", textNews: item.text, imageNews: item.imgUrl, aspectRatio: item.imgAspectRatio, likes: item.likes, comments: item.comments, reposts: item.reposts, views: item.views)
                 
                 newItem.date = self.getDateText(timestamp: item.date)
                 
@@ -122,19 +122,9 @@ final class GetNewsListSwiftyJSON {
     }()
     
     func getDateText(timestamp: Double) -> String {
-    
         let date = Date(timeIntervalSince1970: timestamp)
         let stringDate = dateFormatter.string(from: date)
         return stringDate
-        
-//        var stringDate = ""
-//        DispatchQueue.global().async {
-//            let date = Date(timeIntervalSince1970: timestamp)
-//            stringDate = self.dateFormatter.string(from: date)
-//        }
-//        
-//        return stringDate
-        
     }
     
 }
@@ -153,6 +143,12 @@ struct NewsResponseItemSwifty {
     var views: Int
     var imgUrl = ""
     
+    var imgHeight: Int?
+    var imgWidth: Int?
+    var imgAspectRatio: CGFloat{
+        return CGFloat(imgHeight ?? 300) / CGFloat(imgWidth ?? 300 )
+    }
+    
     init(json: JSON){
         self.sourceID = json["source_id"].intValue
         self.date = json["date"].doubleValue
@@ -167,6 +163,8 @@ struct NewsResponseItemSwifty {
             for size in json["attachments"][0]["link"]["photo"]["sizes"].arrayValue {
                 if size["type"] == "l" {
                     self.imgUrl = size["url"].stringValue
+                    self.imgWidth = size["width"].intValue
+                    self.imgHeight = size["height"].intValue
                 }
             }
         }
@@ -176,6 +174,8 @@ struct NewsResponseItemSwifty {
             for size in json["attachments"][0]["doc"]["preview"]["photo"]["sizes"].arrayValue {
                 if size["type"] == "x" {
                     self.imgUrl = size["src"].stringValue
+                    self.imgWidth = size["width"].intValue
+                    self.imgHeight = size["height"].intValue
                 }
             }
         }
@@ -185,6 +185,8 @@ struct NewsResponseItemSwifty {
             for size in json["attachments"][0]["photo"]["sizes"].arrayValue {
                 if size["type"] == "x" {
                     self.imgUrl = size["url"].stringValue
+                    self.imgWidth = size["width"].intValue
+                    self.imgHeight = size["height"].intValue
                 }
             }
         }
@@ -194,6 +196,8 @@ struct NewsResponseItemSwifty {
             for size in json["photos"]["items"][0]["sizes"].arrayValue {
                 if size["type"] == "x" {
                     self.imgUrl = size["url"].stringValue
+                    self.imgWidth = size["width"].intValue
+                    self.imgHeight = size["height"].intValue
                 }
             }
         }
@@ -203,6 +207,8 @@ struct NewsResponseItemSwifty {
             for image in json["attachments"][0]["video"]["image"].arrayValue {
                 if image["width"] == 800 {
                     self.imgUrl = image["url"].stringValue
+                    self.imgWidth = image["width"].intValue
+                    self.imgHeight = image["height"].intValue
                 }
             }
         }
@@ -213,6 +219,8 @@ struct NewsResponseItemSwifty {
             for image in json["copy_history"][0]["attachments"][0]["video"]["image"].arrayValue {
                 if image["width"] == 800 {
                     self.imgUrl = image["url"].stringValue
+                    self.imgWidth = image["width"].intValue
+                    self.imgHeight = image["height"].intValue
                 }
             }
         }
@@ -223,6 +231,8 @@ struct NewsResponseItemSwifty {
             for size in json["copy_history"][0]["attachments"][0]["photo"]["sizes"].arrayValue {
                 if size["type"] == "x" {
                     self.imgUrl = size["url"].stringValue
+                    self.imgWidth = size["width"].intValue
+                    self.imgHeight = size["height"].intValue
                 }
             }
         }
@@ -258,156 +268,156 @@ struct NewsResponseGroupSwifty {
 // MARK:  - test GCD
 
 
-final class GCDGetNewsListSwiftyJSON {
-    
-    func get (newsFrom timestamp: TimeInterval? = nil,
-              nextPageNews nextNewsID: String = "",
-              comlition: @escaping ([News], String) -> Void){
-
-        DispatchQueue.global().async {
-            
-            // Конфигурация по умолчанию
-            let configuration = URLSessionConfiguration.default
-            // собственная сессия
-            let session =  URLSession(configuration: configuration)
-            
-            // конструктор для URL
-            var urlConstructor = URLComponents()
-            urlConstructor.scheme = "https"
-            urlConstructor.host = "api.vk.com"
-            urlConstructor.path = "/method/newsfeed.get"
-            urlConstructor.queryItems = [
-                URLQueryItem(name: "owner_id", value: String(Session.instance.userId)),
-                URLQueryItem(name: "access_token", value: Session.instance.token),
-                URLQueryItem(name: "filters", value: "post,photo"),
-                URLQueryItem(name: "start_from", value: nextNewsID),
-                URLQueryItem(name: "count", value: "10"),
-                URLQueryItem(name: "v", value: "5.124")
-            ]
-            
-            if let timestamp = timestamp {
-                urlConstructor.queryItems?.append(URLQueryItem(name: "start_time", value: String(timestamp)))
-            }
-            
-            // задача для запуска запроса
-            let task = session.dataTask(with: urlConstructor.url!) { [weak self] (data, _, error) in
-                //print("Запрос к API: \(urlConstructor.url!)")
-                
-                if let error = error {
-                    print("Error in GetNewsListSwiftyJSON: \(error.localizedDescription)")
-                    DispatchQueue.main.async {
-                        comlition([], "")
-                    }
-                    return
-                }
-                
-                // запуск парсинга
-                var newsItems: [News] = []
-                var nextFrom = ""
-                if let data = data, let json = try? JSON(data: data) {
-                    self?.parse(json, completion: { (news) in
-                        newsItems = news
-                        nextFrom = json["response"]["next_from"].stringValue
-                        
-                        DispatchQueue.main.async {
-                            comlition(newsItems, nextFrom)
-                        }
-                        
-                    })
-                    
-                }
-            }
-            task.resume()
-        }
-    }
-    
-    func parse(_ json: JSON,
-               completion: @escaping ([News]) -> Void) {
-        DispatchQueue.global().async {
-            let items = json["response"]["items"]
-                .arrayValue
-                .map { NewsResponseItemSwifty(json: $0) }
-            
-            let profiles = json["response"]["profiles"]
-                .arrayValue
-                .map { NewsResponseProfileSwifty(json: $0) }
-            
-            let groups = json["response"]["groups"]
-                .arrayValue
-                .map { NewsResponseGroupSwifty(json: $0) }
-            
-            var news: [News] = []
-            
-            self.makeNewsList(items, profiles, groups) { (newsList) in
-                news = newsList
-                completion(news)
-            }
-        }
-    }
-    
-    func makeNewsList(_ items: [NewsResponseItemSwifty],
-                      _ profiles: [NewsResponseProfileSwifty],
-                      _ groups: [NewsResponseGroupSwifty],
-                      completion: @escaping ([News]) -> Void) {
-        
-        DispatchQueue.global().async {
-            
-            var newsList: [News] = []
-            var forCount = 0
-            let newsCount = items.count
-            
-            for item in items {
-                
-                self.getDateText(timestamp: item.date) { (stringDate) in
-                
-                    var newItem = News(name: "", avatar: "", date: "", textNews: item.text, imageNews: item.imgUrl, likes: item.likes, comments: item.comments, reposts: item.reposts, views: item.views)
-                    
-                    newItem.date = stringDate
-                    
-                    if item.sourceID > 0 {
-                        let profile = profiles
-                            .filter({ item.sourceID == $0.id })
-                            .first
-                        newItem.name = profile?.name ?? ""
-                        newItem.avatar = profile?.imageUrl ?? ""
-                    } else {
-                        let group = groups
-                            .filter({ abs(item.sourceID) == $0.id })
-                            .first
-                        newItem.name = group?.name ?? ""
-                        newItem.avatar = group?.imageUrl ?? ""
-                    }
-                    
-                    newsList.append(newItem)
-                    
-                    forCount += 1
-                    
-                    // проверка, что цикл обошел все новсти и заполнил массив
-                    if forCount == newsCount {
-                        completion(newsList)
-                    }
-                    
-                }
-                
-            }
-
-        }
-    }
-    
-    let dateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.dateFormat = "dd.MM.yyyy HH:mm:ss"
-        return df
-    }()
-    
-    func getDateText(timestamp: Double, completion: @escaping (String) -> Void) {
-        //var stringDate = ""
-        DispatchQueue.global().async {
-            let date = Date(timeIntervalSince1970: timestamp)
-            let stringDate = self.dateFormatter.string(from: date)
-            completion(stringDate)
-        }
-        //completion(stringDate)
-    }
-    
-}
+//final class GCDGetNewsListSwiftyJSON {
+//
+//    func get (newsFrom timestamp: TimeInterval? = nil,
+//              nextPageNews nextNewsID: String = "",
+//              comlition: @escaping ([News], String) -> Void){
+//
+//        DispatchQueue.global().async {
+//
+//            // Конфигурация по умолчанию
+//            let configuration = URLSessionConfiguration.default
+//            // собственная сессия
+//            let session =  URLSession(configuration: configuration)
+//
+//            // конструктор для URL
+//            var urlConstructor = URLComponents()
+//            urlConstructor.scheme = "https"
+//            urlConstructor.host = "api.vk.com"
+//            urlConstructor.path = "/method/newsfeed.get"
+//            urlConstructor.queryItems = [
+//                URLQueryItem(name: "owner_id", value: String(Session.instance.userId)),
+//                URLQueryItem(name: "access_token", value: Session.instance.token),
+//                URLQueryItem(name: "filters", value: "post,photo"),
+//                URLQueryItem(name: "start_from", value: nextNewsID),
+//                URLQueryItem(name: "count", value: "10"),
+//                URLQueryItem(name: "v", value: "5.124")
+//            ]
+//
+//            if let timestamp = timestamp {
+//                urlConstructor.queryItems?.append(URLQueryItem(name: "start_time", value: String(timestamp)))
+//            }
+//
+//            // задача для запуска запроса
+//            let task = session.dataTask(with: urlConstructor.url!) { [weak self] (data, _, error) in
+//                //print("Запрос к API: \(urlConstructor.url!)")
+//
+//                if let error = error {
+//                    print("Error in GetNewsListSwiftyJSON: \(error.localizedDescription)")
+//                    DispatchQueue.main.async {
+//                        comlition([], "")
+//                    }
+//                    return
+//                }
+//
+//                // запуск парсинга
+//                var newsItems: [News] = []
+//                var nextFrom = ""
+//                if let data = data, let json = try? JSON(data: data) {
+//                    self?.parse(json, completion: { (news) in
+//                        newsItems = news
+//                        nextFrom = json["response"]["next_from"].stringValue
+//
+//                        DispatchQueue.main.async {
+//                            comlition(newsItems, nextFrom)
+//                        }
+//
+//                    })
+//
+//                }
+//            }
+//            task.resume()
+//        }
+//    }
+//
+//    func parse(_ json: JSON,
+//               completion: @escaping ([News]) -> Void) {
+//        DispatchQueue.global().async {
+//            let items = json["response"]["items"]
+//                .arrayValue
+//                .map { NewsResponseItemSwifty(json: $0) }
+//
+//            let profiles = json["response"]["profiles"]
+//                .arrayValue
+//                .map { NewsResponseProfileSwifty(json: $0) }
+//
+//            let groups = json["response"]["groups"]
+//                .arrayValue
+//                .map { NewsResponseGroupSwifty(json: $0) }
+//
+//            var news: [News] = []
+//
+//            self.makeNewsList(items, profiles, groups) { (newsList) in
+//                news = newsList
+//                completion(news)
+//            }
+//        }
+//    }
+//
+//    func makeNewsList(_ items: [NewsResponseItemSwifty],
+//                      _ profiles: [NewsResponseProfileSwifty],
+//                      _ groups: [NewsResponseGroupSwifty],
+//                      completion: @escaping ([News]) -> Void) {
+//
+//        DispatchQueue.global().async {
+//
+//            var newsList: [News] = []
+//            var forCount = 0
+//            let newsCount = items.count
+//
+//            for item in items {
+//
+//                self.getDateText(timestamp: item.date) { (stringDate) in
+//
+//                    var newItem = News(name: "", avatar: "", date: "", textNews: item.text, imageNews: item.imgUrl, likes: item.likes, comments: item.comments, reposts: item.reposts, views: item.views)
+//
+//                    newItem.date = stringDate
+//
+//                    if item.sourceID > 0 {
+//                        let profile = profiles
+//                            .filter({ item.sourceID == $0.id })
+//                            .first
+//                        newItem.name = profile?.name ?? ""
+//                        newItem.avatar = profile?.imageUrl ?? ""
+//                    } else {
+//                        let group = groups
+//                            .filter({ abs(item.sourceID) == $0.id })
+//                            .first
+//                        newItem.name = group?.name ?? ""
+//                        newItem.avatar = group?.imageUrl ?? ""
+//                    }
+//
+//                    newsList.append(newItem)
+//
+//                    forCount += 1
+//
+//                    // проверка, что цикл обошел все новсти и заполнил массив
+//                    if forCount == newsCount {
+//                        completion(newsList)
+//                    }
+//
+//                }
+//
+//            }
+//
+//        }
+//    }
+//
+//    let dateFormatter: DateFormatter = {
+//        let df = DateFormatter()
+//        df.dateFormat = "dd.MM.yyyy HH:mm:ss"
+//        return df
+//    }()
+//
+//    func getDateText(timestamp: Double, completion: @escaping (String) -> Void) {
+//        //var stringDate = ""
+//        DispatchQueue.global().async {
+//            let date = Date(timeIntervalSince1970: timestamp)
+//            let stringDate = self.dateFormatter.string(from: date)
+//            completion(stringDate)
+//        }
+//        //completion(stringDate)
+//    }
+//
+//}

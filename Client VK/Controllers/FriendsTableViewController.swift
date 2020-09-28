@@ -128,13 +128,9 @@ class FriendsTableViewController: UITableViewController, UISearchBarDelegate {
         return cell
     }
     
-    // кратковременное подсвечивание при нажатии на ячейку
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // для избавления смешивания цветов для разных слоёв (имя друга имеет белый фон в строриборде), меняем его при нажатии
-        let cell = tableView.cellForRow(at: indexPath) as! FriendsTableViewCell
-        cell.nameFriendLabel.backgroundColor = cell.backgroundColor
+        // кратковременное подсвечивание при нажатии на ячейку
         tableView.deselectRow(at: indexPath, animated: true)
-        // стоит снова вернуть белый фон после снятия выделения, так как снова будет смешение цветов
     }
     
     

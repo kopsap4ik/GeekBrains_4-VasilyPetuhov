@@ -17,8 +17,7 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
         loadNews() // загрузка новостей из сети/парсинг
     }
     
-//    lazy var getNewsListSwiftyJSON = GetNewsListSwiftyJSON()
-    lazy var getNewsListSwiftyJSON = GCDGetNewsListSwiftyJSON()
+    lazy var getNewsListSwiftyJSON = GetNewsListSwiftyJSON()
     lazy var imageCache = ImageCache(container: self.tableView)
     var postNewsList: [News] = []
     
@@ -81,6 +80,23 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
     
     // MARK: - Table view data source
     
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//
+////        guard let cell = tableView.cellForRow(at: indexPath) as? NewsTableViewCell else { return UITableView.automaticDimension }
+////        let imgHeight = cell.bounds.width * postNewsList[indexPath.row].aspectRatio
+//        
+//        print(tableView.bounds.width)
+//        print(postNewsList[indexPath.row].aspectRatio)
+//        
+//        let imgHeight = tableView.bounds.width * postNewsList[indexPath.row].aspectRatio - 6
+//        
+//        print(imgHeight)
+//
+////        cell.imgNews.bounds.height = cell.bounds.width * postNewsList[indexPath.row].aspectRatio
+//
+//        return imgHeight + 229.5
+//    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postNewsList.count
     }
@@ -91,8 +107,10 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
         
         if postNewsList[indexPath.row].textNews.isEmpty {
             identifier = "PhotoCell"
+            print("PhotoCell")
         } else {
             identifier = "PostCell"
+            print("PostCell")
         }
         
         let  cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! NewsTableViewCell
@@ -134,7 +152,14 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
         guard let imgUrl = URL(string: postNewsList[indexPath.row].imageNews ) else { return cell }
         cell.imgNews.image = UIImage(systemName: "icloud.and.arrow.down") // обнулить картинку
         cell.imgNews.load(url: imgUrl) // работает через extension UIImageView
-        cell.imgNews.contentMode = .scaleAspectFill
+        //cell.imgNews.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        cell.imgNews.heightAnchor.constraint(equalTo: cell.widthAnchor, multiplier: postNewsList[indexPath.row].aspectRatio).isActive = true
+        //cell.bounds.width * postNewsList[indexPath.row].aspectRatio
+        
+        cell.imgNews.contentMode = .scaleAspectFit
+        
+
         
         return cell
     }
