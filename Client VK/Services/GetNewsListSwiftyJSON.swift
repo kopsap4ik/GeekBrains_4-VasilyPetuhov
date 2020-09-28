@@ -30,10 +30,10 @@ final class GetNewsListSwiftyJSON {
             urlConstructor.queryItems = [
                 URLQueryItem(name: "owner_id", value: String(Session.instance.userId)),
                 URLQueryItem(name: "access_token", value: Session.instance.token),
-                //URLQueryItem(name: "filters", value: "post,photo"),
-                URLQueryItem(name: "filters", value: "photo"),
+//                URLQueryItem(name: "filters", value: "post,photo"),
+                URLQueryItem(name: "filters", value: "photo,wall_photo"),
                 URLQueryItem(name: "start_from", value: nextNewsID),
-                URLQueryItem(name: "count", value: "10"),
+//                URLQueryItem(name: "count", value: "10"),
                 URLQueryItem(name: "v", value: "5.124")
             ]
             
@@ -43,7 +43,7 @@ final class GetNewsListSwiftyJSON {
             
             // задача для запуска запроса
             let task = session.dataTask(with: urlConstructor.url!) { [weak self] (data, _, error) in
-                //print("Запрос к API: \(urlConstructor.url!)")
+                print("Запрос к API: \(urlConstructor.url!)")
                 
                 if let error = error {
                     print("Error in GetNewsListSwiftyJSON: \(error.localizedDescription)")
@@ -146,7 +146,7 @@ struct NewsResponseItemSwifty {
     var imgHeight: Int?
     var imgWidth: Int?
     var imgAspectRatio: CGFloat{
-        return CGFloat(imgHeight ?? 300) / CGFloat(imgWidth ?? 300 )
+        return CGFloat(imgHeight ?? 1) / CGFloat(imgWidth ?? 1 )
     }
     
     init(json: JSON){
@@ -158,24 +158,15 @@ struct NewsResponseItemSwifty {
         self.reposts = json["reposts"]["count"].intValue
         self.views = json["views"]["count"].intValue
         
-        // тип ссылки
-        if json["attachments"][0]["type"] == "link" {
-            for size in json["attachments"][0]["link"]["photo"]["sizes"].arrayValue {
-                if size["type"] == "l" {
+        
+        // тип фото-wall
+        if json["type"] == "wall_photo" {
+            for size in json["photos"]["items"][0]["sizes"].arrayValue {
+                if size["type"] == "x" {
                     self.imgUrl = size["url"].stringValue
                     self.imgWidth = size["width"].intValue
                     self.imgHeight = size["height"].intValue
-                }
-            }
-        }
-        
-        // тип doc
-        if json["attachments"][0]["type"] == "doc" {
-            for size in json["attachments"][0]["doc"]["preview"]["photo"]["sizes"].arrayValue {
-                if size["type"] == "x" {
-                    self.imgUrl = size["src"].stringValue
-                    self.imgWidth = size["width"].intValue
-                    self.imgHeight = size["height"].intValue
+                    return
                 }
             }
         }
@@ -187,40 +178,7 @@ struct NewsResponseItemSwifty {
                     self.imgUrl = size["url"].stringValue
                     self.imgWidth = size["width"].intValue
                     self.imgHeight = size["height"].intValue
-                }
-            }
-        }
-        
-        // тип фото 2 (другой вариант json)
-        if json["photos"]["items"].array != nil {
-            for size in json["photos"]["items"][0]["sizes"].arrayValue {
-                if size["type"] == "x" {
-                    self.imgUrl = size["url"].stringValue
-                    self.imgWidth = size["width"].intValue
-                    self.imgHeight = size["height"].intValue
-                }
-            }
-        }
-        
-        // тип видео
-        if json["attachments"][0]["type"] == "video" {
-            for image in json["attachments"][0]["video"]["image"].arrayValue {
-                if image["width"] == 800 {
-                    self.imgUrl = image["url"].stringValue
-                    self.imgWidth = image["width"].intValue
-                    self.imgHeight = image["height"].intValue
-                }
-            }
-        }
-        
-        // тип видео в истории (репост)
-        if json["copy_history"][0]["attachments"][0]["type"] == "video" {
-            //self.text = "Репост записи: " + json["copy_history"][0]["text"].stringValue
-            for image in json["copy_history"][0]["attachments"][0]["video"]["image"].arrayValue {
-                if image["width"] == 800 {
-                    self.imgUrl = image["url"].stringValue
-                    self.imgWidth = image["width"].intValue
-                    self.imgHeight = image["height"].intValue
+                    return
                 }
             }
         }
@@ -233,9 +191,75 @@ struct NewsResponseItemSwifty {
                     self.imgUrl = size["url"].stringValue
                     self.imgWidth = size["width"].intValue
                     self.imgHeight = size["height"].intValue
+                    return
                 }
             }
         }
+        
+        // тип ссылки
+        if json["attachments"][0]["type"] == "link" {
+            for size in json["attachments"][0]["link"]["photo"]["sizes"].arrayValue {
+                if size["type"] == "l" {
+                    self.imgUrl = size["url"].stringValue
+                    self.imgWidth = size["width"].intValue
+                    self.imgHeight = size["height"].intValue
+                    return
+                }
+            }
+        }
+        
+        // тип doc
+        if json["attachments"][0]["type"] == "doc" {
+            for size in json["attachments"][0]["doc"]["preview"]["photo"]["sizes"].arrayValue {
+                if size["type"] == "x" {
+                    self.imgUrl = size["src"].stringValue
+                    self.imgWidth = size["width"].intValue
+                    self.imgHeight = size["height"].intValue
+                    return
+                }
+            }
+        }
+        
+
+        
+        // тип фото 2 (другой вариант json)
+        if json["photos"]["items"].array != nil {
+            for size in json["photos"]["items"][0]["sizes"].arrayValue {
+                if size["type"] == "x" {
+                    self.imgUrl = size["url"].stringValue
+                    self.imgWidth = size["width"].intValue
+                    self.imgHeight = size["height"].intValue
+                    return
+                }
+            }
+        }
+        
+        // тип видео
+        if json["attachments"][0]["type"] == "video" {
+            for image in json["attachments"][0]["video"]["image"].arrayValue {
+                if image["width"] == 800 {
+                    self.imgUrl = image["url"].stringValue
+                    self.imgWidth = image["width"].intValue
+                    self.imgHeight = image["height"].intValue
+                    return
+                }
+            }
+        }
+        
+        // тип видео в истории (репост)
+        if json["copy_history"][0]["attachments"][0]["type"] == "video" {
+            //self.text = "Репост записи: " + json["copy_history"][0]["text"].stringValue
+            for image in json["copy_history"][0]["attachments"][0]["video"]["image"].arrayValue {
+                if image["width"] == 800 {
+                    self.imgUrl = image["url"].stringValue
+                    self.imgWidth = image["width"].intValue
+                    self.imgHeight = image["height"].intValue
+                    return
+                }
+            }
+        }
+        
+
         
         
     }
