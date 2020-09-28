@@ -17,7 +17,8 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
         loadNews() // загрузка новостей из сети/парсинг
     }
     
-    lazy var getNewsListSwiftyJSON = GetNewsListSwiftyJSON()
+//    lazy var getNewsListSwiftyJSON = GetNewsListSwiftyJSON()
+    lazy var getNewsListSwiftyJSON = GCDGetNewsListSwiftyJSON()
     lazy var imageCache = ImageCache(container: self.tableView)
     var postNewsList: [News] = []
     
