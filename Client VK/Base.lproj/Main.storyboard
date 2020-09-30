@@ -301,14 +301,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostCell" id="XVj-Zu-xyL" customClass="NewsTableViewCell" customModule="Client_VK" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="638.5"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="738.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XVj-Zu-xyL" id="jBl-55-x9v">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="638.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="738.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icloud.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yEw-l7-P7d">
-                                            <rect key="frame" x="3" y="180.5" width="408" height="409"/>
+                                            <rect key="frame" x="3" y="280.5" width="408" height="409"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="yEw-l7-P7d" secondAttribute="height" multiplier="1:1" id="xx0-hp-gaG"/>
                                             </constraints>
@@ -335,11 +335,11 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jNc-v9-BhL">
-                                            <rect key="frame" x="3" y="70" width="408" height="100.5"/>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jNc-v9-BhL">
+                                            <rect key="frame" x="3" y="70" width="408" height="200.5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" priority="900" constant="100" id="i2r-xY-t1G"/>
+                                                <constraint firstAttribute="height" priority="900" constant="200" id="i2r-xY-t1G"/>
                                             </constraints>
                                             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                             <color key="textColor" systemColor="labelColor"/>
@@ -347,7 +347,7 @@
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eyx-9M-9Bd">
-                                            <rect key="frame" x="0.0" y="598.5" width="414" height="30"/>
+                                            <rect key="frame" x="0.0" y="698.5" width="414" height="30"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apT-PN-RvZ" customClass="LikeControl" customModule="Client_VK" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="5" width="40" height="20"/>
@@ -411,11 +411,22 @@
                                                 </mask>
                                             </variation>
                                         </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u6g-1e-4wI">
+                                            <rect key="frame" x="8" y="255.5" width="161" height="30"/>
+                                            <state key="normal" title="Показать полностью...">
+                                                <color key="titleColor" systemColor="linkColor"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="showMore:" destination="XVj-Zu-xyL" eventType="touchUpInside" id="EZA-cP-PxV"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="yEw-l7-P7d" firstAttribute="leading" secondItem="jBl-55-x9v" secondAttribute="leading" constant="3" id="1zI-9d-XMC"/>
+                                        <constraint firstItem="u6g-1e-4wI" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="jNc-v9-BhL" secondAttribute="trailing" constant="-100" id="2lI-8c-eb1"/>
                                         <constraint firstItem="rX0-F7-1Tr" firstAttribute="top" secondItem="jBl-55-x9v" secondAttribute="top" constant="10" id="B1P-O0-BB8"/>
                                         <constraint firstItem="rX0-F7-1Tr" firstAttribute="leading" secondItem="jBl-55-x9v" secondAttribute="leading" constant="10" id="GS3-5z-Whs"/>
+                                        <constraint firstItem="u6g-1e-4wI" firstAttribute="leading" secondItem="jNc-v9-BhL" secondAttribute="leading" constant="5" id="I6c-Rh-H4r"/>
                                         <constraint firstItem="8L2-SS-8kd" firstAttribute="leading" secondItem="pJW-zE-FIW" secondAttribute="leading" id="J3W-gL-zTa"/>
                                         <constraint firstItem="8L2-SS-8kd" firstAttribute="bottom" secondItem="rX0-F7-1Tr" secondAttribute="bottom" constant="3" id="K8I-8o-39A"/>
                                         <constraint firstItem="Eyx-9M-9Bd" firstAttribute="leading" secondItem="jBl-55-x9v" secondAttribute="leading" id="L8L-cJ-azU"/>
@@ -427,6 +438,7 @@
                                         <constraint firstAttribute="trailing" secondItem="8L2-SS-8kd" secondAttribute="trailing" constant="20" id="i7M-nU-OVi"/>
                                         <constraint firstItem="jNc-v9-BhL" firstAttribute="top" secondItem="rX0-F7-1Tr" secondAttribute="bottom" constant="10" id="ifc-6E-5ZX"/>
                                         <constraint firstItem="pJW-zE-FIW" firstAttribute="centerY" secondItem="rX0-F7-1Tr" secondAttribute="centerY" id="mGB-5U-rLD"/>
+                                        <constraint firstItem="u6g-1e-4wI" firstAttribute="top" secondItem="jNc-v9-BhL" secondAttribute="bottom" constant="-15" id="n0j-pe-bhf"/>
                                         <constraint firstAttribute="bottom" secondItem="Eyx-9M-9Bd" secondAttribute="bottom" constant="10" id="o8D-uP-unS"/>
                                         <constraint firstAttribute="trailing" secondItem="pJW-zE-FIW" secondAttribute="trailing" constant="20" id="qgK-l9-FZ6"/>
                                         <constraint firstAttribute="trailing" secondItem="Eyx-9M-9Bd" secondAttribute="trailing" id="qjw-Hu-7pT"/>
@@ -441,12 +453,14 @@
                                     <outlet property="likesCount" destination="apT-PN-RvZ" id="gIc-Ge-XYf"/>
                                     <outlet property="nameUserNews" destination="pJW-zE-FIW" id="QL3-nM-rcr"/>
                                     <outlet property="repostsCount" destination="pvU-E9-5kV" id="WnW-5m-DsV"/>
+                                    <outlet property="showMore" destination="u6g-1e-4wI" id="tIj-rO-oYw"/>
                                     <outlet property="textNewsPost" destination="jNc-v9-BhL" id="JKI-uI-53B"/>
+                                    <outlet property="textNewsPostHeight" destination="i2r-xY-t1G" id="yzy-N6-9yX"/>
                                     <outlet property="viewsCount" destination="6cq-Jr-OHI" id="V1z-iP-F1B"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PhotoCell" id="NFR-ri-MDy" customClass="NewsTableViewCell" customModule="Client_VK" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="666.5" width="414" height="534.5"/>
+                                <rect key="frame" x="0.0" y="766.5" width="414" height="534.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NFR-ri-MDy" id="3jQ-9Q-amy">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="534.5"/>

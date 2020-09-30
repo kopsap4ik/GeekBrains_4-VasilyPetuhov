@@ -81,19 +81,20 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+
         var cellHeight: CGFloat
-        
+
         if postNewsList[indexPath.row].textNews.isEmpty {
             // ФОТО: хедер 70 + футер 50 + высота картинки
-            let imgHeight = tableView.bounds.width * postNewsList[indexPath.row].aspectRatio
-            cellHeight = 120 + imgHeight
+//            let imgHeight = tableView.bounds.width * postNewsList[indexPath.row].aspectRatio
+//            cellHeight = 120 + ceil(imgHeight) //ceil округляет значение до целого (откинуть дробь)
+            cellHeight = UITableView.automaticDimension
 //            print("PhotoCell")
         } else {
             cellHeight = UITableView.automaticDimension
 //            print("PostCell")
         }
-        
+
         return cellHeight
 
 //        guard let cell = tableView.cellForRow(at: indexPath) as? NewsTableViewCell else { return UITableView.automaticDimension }
@@ -149,13 +150,28 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
         // просмотры
         cell.viewsCount.setTitle(String(postNewsList[indexPath.row].views), for: .normal)
         
-        // текст новости
+        
+        // текст новости (+ ресет кнопки и текстВью)
         if identifier == "PostCell" {
             cell.textNewsPost.text = postNewsList[indexPath.row].textNews
+            cell.resetStateButtonShowMore() //состояние кнопки по умолчанию при переиспользовании ячейки
+            
+            cell.textNewsPost.adjustUITextViewHeightToFit() // растягиваем текст, чтобы узнать высоту текстового поля
+            let heightTextView = cell.textNewsPost.frame.size.height
+            
+            if heightTextView > 200.5 {
+                // если размер больше заданного, то сжимаем текст до заданного значения
+                cell.textNewsPost.adjustUITextViewHeightToDefault()
+                cell.showMore.setTitle("Показать полностью...", for: .normal)
+            } else {
+                // если размер меньше, то прячем кнопку, так как нет текста чтобы показать больше
+                cell.showMore.isHidden = true
+            }
         }
         
 
         // пропорции картинки (перестают отображаться картинки в определенный момент...)
+//        cell.imgNews.translatesAutoresizingMaskIntoConstraints = false
 //        cell.imgNews.heightAnchor.constraint(equalTo: cell.widthAnchor,
 //                                             multiplier: postNewsList[indexPath.row].aspectRatio).isActive = true
         //картинка к новости
