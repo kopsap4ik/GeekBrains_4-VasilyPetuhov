@@ -43,7 +43,7 @@ final class GetNewsListSwiftyJSON {
             
             // задача для запуска запроса
             let task = session.dataTask(with: urlConstructor.url!) { [weak self] (data, _, error) in
-                print("Запрос к API: \(urlConstructor.url!)")
+//                print("Запрос к API: \(urlConstructor.url!)")
                 
                 if let error = error {
                     print("Error in GetNewsListSwiftyJSON: \(error.localizedDescription)")
