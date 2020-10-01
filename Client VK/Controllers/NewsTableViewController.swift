@@ -150,11 +150,12 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
             let heightTextView = cell.textNewsPost.frame.size.height
             
             if heightTextView > 200.5 {
-                // если размер больше заданного, то сжимаем текст до заданного значения
+                // если размер больше заданного, то сжимаем текст до 200
                 cell.textNewsPost.adjustUITextViewHeightToDefault()
-                cell.showMore.setTitle("Показать полностью...", for: .normal)
+                cell.showMore.setTitle("Показать полностью...", for: .normal) // возвращаем кнопку showMore
             } else {
-                // если размер меньше, то прячем кнопку, так как нет текста чтобы показать больше
+                // если размер меньше, то текст остается растянутым на всю высоту
+                // прячем кнопку, так как нет текста чтобы показать больше
                 cell.showMore.isHidden = true
             }
         }

@@ -26,7 +26,7 @@ class NewsTableViewCell: UITableViewCell {
     @IBAction func showMore(_ sender: Any) {
         
         let size = textNewsPost.frame.size.height
-        if size == 200.5 {
+        if size <= 200.5 {
             textNewsPost.adjustUITextViewHeightToFit()
             showMore.setTitle("Показать меньше...", for: .normal)
         } else {

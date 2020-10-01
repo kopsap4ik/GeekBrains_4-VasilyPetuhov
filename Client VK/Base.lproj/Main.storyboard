@@ -310,7 +310,7 @@
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icloud.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yEw-l7-P7d">
                                             <rect key="frame" x="3" y="280.5" width="408" height="409"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="yEw-l7-P7d" secondAttribute="height" multiplier="1:1" id="xx0-hp-gaG"/>
+                                                <constraint firstAttribute="width" secondItem="yEw-l7-P7d" secondAttribute="height" multiplier="1:1" priority="900" id="xx0-hp-gaG"/>
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rX0-F7-1Tr" customClass="AvatarsView" customModule="Client_VK" customModuleProvider="target">
