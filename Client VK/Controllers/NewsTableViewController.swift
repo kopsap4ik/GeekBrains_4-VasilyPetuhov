@@ -156,7 +156,7 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
             cell.textNewsPost.text = postNewsList[indexPath.row].textNews
             cell.resetStateButtonShowMore() //состояние кнопки по умолчанию при переиспользовании ячейки
             
-            cell.textNewsPost.adjustUITextViewHeightToFit() // растягиваем текст, чтобы узнать высоту текстового поля
+            cell.textNewsPost.sizeToFit() // растягиваем текст, чтобы узнать высоту текстового поля
             let heightTextView = cell.textNewsPost.frame.size.height
             
             if heightTextView > 200.5 {
