@@ -81,27 +81,17 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
         var cellHeight: CGFloat
-
+        
         if postNewsList[indexPath.row].textNews.isEmpty {
-            // ФОТО: хедер 70 + футер 50 + высота картинки
-//            let imgHeight = tableView.bounds.width * postNewsList[indexPath.row].aspectRatio
-//            cellHeight = 120 + ceil(imgHeight) //ceil округляет значение до целого (откинуть дробь)
-            cellHeight = UITableView.automaticDimension
-//            print("PhotoCell")
+            // высота ячейки по умолчанию 534,5, хедер и футтер = 119 (они не меняются)
+            let imgHeight = tableView.bounds.width * postNewsList[indexPath.row].aspectRatio
+            cellHeight = 119 + ceil(imgHeight) //ceil округляет значение до целого
         } else {
             cellHeight = UITableView.automaticDimension
-//            print("PostCell")
         }
-
+        
         return cellHeight
-
-//        guard let cell = tableView.cellForRow(at: indexPath) as? NewsTableViewCell else { return UITableView.automaticDimension }
-//        let imgHeight = cell.bounds.width * postNewsList[indexPath.row].aspectRatio
-
-//        cell.imgNews.bounds.height = cell.bounds.width * postNewsList[indexPath.row].aspectRatio
-
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -169,18 +159,10 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
             }
         }
         
-
-        // пропорции картинки (перестают отображаться картинки в определенный момент...)
-//        cell.imgNews.translatesAutoresizingMaskIntoConstraints = false
-//        cell.imgNews.heightAnchor.constraint(equalTo: cell.widthAnchor,
-//                                             multiplier: postNewsList[indexPath.row].aspectRatio).isActive = true
         //картинка к новости
         guard let imgUrl = URL(string: postNewsList[indexPath.row].imageNews ) else { return cell }
         cell.imgNews.image = UIImage(systemName: "icloud.and.arrow.down") // обнулить картинку
         cell.imgNews.load(url: imgUrl) // работает через extension UIImageView
-//        cell.imgNews.contentMode = .scaleAspectFit
-        
-
         
         return cell
     }
@@ -210,8 +192,6 @@ class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefe
             strongSelf.nextNewsID = nextFromID
             strongSelf.isLoadingNews = false  // ВЫКЛ флаг загрузки
         }
-        
-        
     }
     
 }

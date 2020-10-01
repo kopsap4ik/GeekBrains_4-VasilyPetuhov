@@ -33,17 +33,6 @@ class NewsTableViewCell: UITableViewCell {
             textNewsPost.adjustUITextViewHeightToDefault()
             showMore.setTitle("Показать полностью...", for: .normal)
         }
-        //textNewsPost.heightAnchor.constraint(equalToConstant: 400)
-        
-        //textNewsPost.translatesAutoresizingMaskIntoConstraints = false
-        //textNewsPost.isScrollEnabled = false
-        //textNewsPostHeight.constant = 500 //textNewsPost.contentSize.height
-        
-//        textNewsPost.translatesAutoresizingMaskIntoConstraints = true
-//        textNewsPost.sizeToFit()
-//        textNewsPost.isScrollEnabled = false
-//        textNewsPost.translatesAutoresizingMaskIntoConstraints = false
-//        showMore.isHidden = true
     }
     
     func resetStateButtonShowMore() {
@@ -56,12 +45,9 @@ extension UITextView {
     func adjustUITextViewHeightToFit() {
         self.translatesAutoresizingMaskIntoConstraints = true
         self.sizeToFit()
-//        self.isScrollEnabled = false
     }
     
     func adjustUITextViewHeightToDefault() {
         self.translatesAutoresizingMaskIntoConstraints = false
-//        self.sizeToFit()
-//        self.isScrollEnabled = true
     }
 }

@@ -30,7 +30,7 @@ final class GetNewsListSwiftyJSON {
             urlConstructor.queryItems = [
                 URLQueryItem(name: "owner_id", value: String(Session.instance.userId)),
                 URLQueryItem(name: "access_token", value: Session.instance.token),
-                URLQueryItem(name: "filters", value: "post,photo"),
+                URLQueryItem(name: "filters", value: "post,photo"), // wall_photo дублируется в новостях, поэтому не используем
 //                URLQueryItem(name: "filters", value: "photo,wall_photo"),
                 URLQueryItem(name: "start_from", value: nextNewsID),
                 URLQueryItem(name: "count", value: "10"),
