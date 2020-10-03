@@ -38,7 +38,7 @@ class PhotosFriendAsyncController: ASDKViewController<ASDisplayNode>, ASCollecti
     // MARK:  - ASCollectionDelegate and ASCollectionDataSource
     
     func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        2
+        10
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
