@@ -89,8 +89,16 @@
                                             <segue destination="DXN-Lu-crJ" kind="show" identifier="" id="cc6-Jt-K0X"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nU6-np-2nw">
+                                        <rect key="frame" x="144.5" y="658" width="125" height="30"/>
+                                        <state key="normal" title="ASCollectionNode"/>
+                                        <connections>
+                                            <action selector="asnode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="juc-hi-9kJ"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="nU6-np-2nw" firstAttribute="top" secondItem="Rvh-b0-d9B" secondAttribute="bottom" constant="50" id="0tc-5w-ztV"/>
                                     <constraint firstItem="4ni-wF-J7M" firstAttribute="top" secondItem="6cc-f4-FMi" secondAttribute="bottom" constant="20" id="3mh-EJ-Wls"/>
                                     <constraint firstItem="yka-5I-cxK" firstAttribute="centerX" secondItem="6jK-KH-fDy" secondAttribute="centerX" id="6F1-Qg-hU2"/>
                                     <constraint firstItem="4ni-wF-J7M" firstAttribute="centerX" secondItem="6jK-KH-fDy" secondAttribute="centerX" id="8fz-Jp-DDL"/>
@@ -98,6 +106,7 @@
                                     <constraint firstItem="6cc-f4-FMi" firstAttribute="leading" secondItem="6jK-KH-fDy" secondAttribute="leading" priority="900" constant="50" id="L5W-IL-GFw"/>
                                     <constraint firstAttribute="trailing" secondItem="6cc-f4-FMi" secondAttribute="trailing" priority="900" constant="50" id="QWk-bY-IO4"/>
                                     <constraint firstItem="4ni-wF-J7M" firstAttribute="width" secondItem="6cc-f4-FMi" secondAttribute="width" id="RlC-P5-3gT"/>
+                                    <constraint firstItem="nU6-np-2nw" firstAttribute="centerX" secondItem="6jK-KH-fDy" secondAttribute="centerX" id="SZN-TF-OWF"/>
                                     <constraint firstItem="YMo-Ac-YEI" firstAttribute="width" secondItem="6cc-f4-FMi" secondAttribute="width" id="US7-aJ-op8"/>
                                     <constraint firstItem="YMo-Ac-YEI" firstAttribute="top" secondItem="4ni-wF-J7M" secondAttribute="bottom" constant="20" id="aAK-d5-Q9U"/>
                                     <constraint firstItem="6cc-f4-FMi" firstAttribute="top" secondItem="yka-5I-cxK" secondAttribute="bottom" constant="30" id="aYE-7g-S1T"/>
